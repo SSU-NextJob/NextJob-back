@@ -7,7 +7,11 @@
         <setting name="logImpl" value="LOG4J" />
     </settings>
 
-    <mappers>
-<!--        <mapper resource="/sqlmap/user/UserMapper.xml"/>-->
-    </mappers>
+    <typeAliases>
+        <typeAlias alias="CamelCaseMap" type="com.nextjob.base.util.CamelCaseMap"/>
+    </typeAliases>
+
+<!--    <mappers>-->
+<!--        <mapper resource="sqlmap/user/UserMapper.xml"/>-->
+<!--    </mappers>-->
 </configuration>

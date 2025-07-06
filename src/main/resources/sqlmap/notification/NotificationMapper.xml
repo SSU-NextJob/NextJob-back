@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nextjob.back.notification.service.NotificationMapper">
+
+    <select id="findNotificationsByUserId" resultType="CamelCaseMap">
+        SELECT notification_id, title, content, is_read, notification_type, create_date FROM notifications
+        WHERE user_id = #{userId}
+        ORDER BY create_date DESC
+    </select>
+</mapper>

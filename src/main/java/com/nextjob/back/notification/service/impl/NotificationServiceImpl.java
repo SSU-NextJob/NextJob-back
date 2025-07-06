@@ -26,4 +26,10 @@ public class NotificationServiceImpl implements NotificationService {
         notificationMapper.markNotificationAsRead(notificationId);
         return notificationMapper.findNotificationByNotificationId(notificationId);
     }
+
+    @Override
+    public List<CamelCaseMap> readNotificationsByUserId(int userId) {
+        notificationMapper.readAllNotificationsByUserId(userId);
+        return notificationMapper.findNotificationsByUserId(userId);
+    }
 }

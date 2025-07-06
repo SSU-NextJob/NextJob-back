@@ -10,4 +10,6 @@ public interface NotificationService {
     List<CamelCaseMap> findNotificationsByUserId(int userId);
 
     CamelCaseMap readNotification(int notificationId);
+
+    List<CamelCaseMap> readNotificationsByUserId(int userId);
 }

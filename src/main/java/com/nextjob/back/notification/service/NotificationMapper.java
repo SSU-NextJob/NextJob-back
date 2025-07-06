@@ -15,4 +15,6 @@ public interface NotificationMapper {
     CamelCaseMap findNotificationByNotificationId(int notificationId);
 
     void markNotificationAsRead(int notificationId);
+
+    void readAllNotificationsByUserId(int userId);
 }

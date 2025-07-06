@@ -1,10 +1,8 @@
 package com.nextjob.back.notification.web;
 
-import com.nextjob.back.notification.domain.Notification;
 import com.nextjob.back.notification.service.NotificationService;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -21,7 +19,7 @@ public class NotificationController {
 
     // 알림 조회
     @GetMapping
-    public ApiResponse<List<CamelCaseMap>> findNotificationList(@RequestParam int userId, Model model) {
+    public ApiResponse<List<CamelCaseMap>> findNotificationList(@RequestParam int userId) {
         List<CamelCaseMap> notifications = notificationService.findNotificationsByUserId(userId);
         if (notifications == null) {
             notifications = Collections.emptyList();
@@ -31,14 +29,15 @@ public class NotificationController {
 
     // 알림 확인
     @PatchMapping("/{notificationId}/read")
-    public ApiResponse<CamelCaseMap> readNotification(@PathVariable("notificationId") int notificationId, Model model) {
+    public ApiResponse<CamelCaseMap> readNotification(@PathVariable("notificationId") int notificationId) {
         CamelCaseMap notification = notificationService.readNotification(notificationId);
         return ApiResponse.ok(notification);
     }
 
     // 알림 전체 확인
     @PatchMapping("/read-all")
-    public String readAllNotifications(Model model) {
-        return null;
+    public ApiResponse<List<CamelCaseMap>> readAllNotifications(@RequestParam int userId) {
+        List<CamelCaseMap> notifications = notificationService.readNotificationsByUserId(userId);
+        return ApiResponse.ok(notifications);
     }
 }

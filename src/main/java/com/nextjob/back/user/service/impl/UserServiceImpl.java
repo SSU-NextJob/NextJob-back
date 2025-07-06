@@ -11,7 +11,11 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
+
+    public UserServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     /**
      * 사용자 상세 조회
@@ -22,5 +26,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<CamelCaseMap> findUserDetail(UserSearchCriteria userSearchCriteria) {
         return userMapper.findUserDetail(userSearchCriteria);
+    }
+
+    @Override
+    public CamelCaseMap findUserDetailByUserId(int userId) {
+        return userMapper.findUserDetailByUserId(userId);
     }
 }

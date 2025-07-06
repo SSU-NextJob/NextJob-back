@@ -6,4 +6,9 @@
         /* UserMapper.findUserDetail */
         /* SELECT 쿼리 작성하면 됨 */
     </select>
+
+    <select id="findUserDetailByUserId" resultType="CamelCaseMap">
+        SELECT * FROM users
+        WHERE user_id = #{userID}
+    </select>
 </mapper>

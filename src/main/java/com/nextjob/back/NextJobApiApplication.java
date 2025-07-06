@@ -3,7 +3,7 @@ package com.nextjob.back;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.nextjob")
 public class NextJobApiApplication {
 
     public static void main(String[] args) {

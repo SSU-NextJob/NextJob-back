@@ -22,6 +22,11 @@ public record ApiResponse<T>(
     }
 
     public static <T> ApiResponse<T> fail(final CustomException e) {
-        return new ApiResponse<>(e.getErrorCode().getHttpStatus(), false, null, ExceptionDto.of(e.getErrorCode()));
+        return new ApiResponse<>(
+                e.getErrorCode().getHttpStatus(),
+                false,
+                null,
+                ExceptionDto.of(e.getErrorCode(), e.getMessage())  // 커스텀 메시지 반영
+        );
     }
 }

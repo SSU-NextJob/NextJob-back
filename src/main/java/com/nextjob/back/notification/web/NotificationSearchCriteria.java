@@ -20,7 +20,6 @@ public class NotificationSearchCriteria extends Domain implements Search {
 
     private String profileImage;
 
-    //    TODO: 타입 수정 필요
     private String notificationType;
 
 }

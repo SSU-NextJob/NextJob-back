@@ -2,7 +2,6 @@ package com.nextjob.back.notification.service;
 
 import com.nextjob.base.util.CamelCaseMap;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

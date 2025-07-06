@@ -14,7 +14,6 @@ public class Notification extends Domain {
 
     private Boolean isRead;
 
-//    TODO: 타입 수정 필요
     private String notificationType;
 
     public int getNotificationId() {

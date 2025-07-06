@@ -7,4 +7,15 @@
         WHERE user_id = #{userId}
         ORDER BY create_date DESC
     </select>
+
+    <select id="markNotificationAsRead" resultType="CamelCaseMap">
+        UPDATE notifications
+        SET is_read = TRUE
+        WHERE notification_id = #{notificationId}
+    </select>
+
+    <select id="findNotificationByNotificationId" resultType="CamelCaseMap">
+        SELECT notification_id, title, content, is_read, notification_type, create_date FROM notifications
+        WHERE notification_id = #{notificationId}
+    </select>
 </mapper>

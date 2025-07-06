@@ -8,4 +8,6 @@ public interface NotificationService {
 
     /* 사용자 알림 조회 */
     List<CamelCaseMap> findNotificationsByUserId(int userId);
+
+    CamelCaseMap readNotification(int notificationId);
 }

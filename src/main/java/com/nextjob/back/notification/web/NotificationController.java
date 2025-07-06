@@ -31,8 +31,9 @@ public class NotificationController {
 
     // 알림 확인
     @PatchMapping("/{notificationId}/read")
-    public String readNotification(@PathVariable("notificationId") int notificationId, Model model) {
-        return null;
+    public ApiResponse<CamelCaseMap> readNotification(@PathVariable("notificationId") int notificationId, Model model) {
+        CamelCaseMap notification = notificationService.readNotification(notificationId);
+        return ApiResponse.ok(notification);
     }
 
     // 알림 전체 확인

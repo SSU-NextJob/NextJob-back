@@ -10,4 +10,5 @@ public interface UserService {
     /* 사용자 상세 조회 */
     List<CamelCaseMap> findUserDetail(UserSearchCriteria userSearchCriteria);
 
+    CamelCaseMap findUserDetailByUserId(int userId);
 }

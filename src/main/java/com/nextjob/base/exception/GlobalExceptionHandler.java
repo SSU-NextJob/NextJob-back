@@ -2,6 +2,7 @@ package com.nextjob.base.exception;
 
 import com.nextjob.base.web.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -14,15 +15,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {NoHandlerFoundException.class, HttpRequestMethodNotSupportedException.class})
     public ApiResponse<?> handleNoPageFoundException(Exception e) {
         log.error("GlobalExceptionHandler catch NoHandlerFoundException : {}", e.getMessage());
-        return ApiResponse.fail(new CustomException(ErrorCode.NOT_FOUND_END_POINT));
+        return ApiResponse.fail(new CustomException(ErrorCode.NOT_FOUND));
     }
 
 
     // 커스텀 예외
-    @ExceptionHandler(value = {CustomException.class})
-    public ApiResponse<?> handleCustomException(CustomException e) {
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ApiResponse<?>> handleCustomException(CustomException e) {
         log.error("handleCustomException() in GlobalExceptionHandler throw CustomException : {}", e.getMessage());
-        return ApiResponse.fail(e);
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(ApiResponse.fail(e));
     }
 
     // 기본 예외

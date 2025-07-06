@@ -2,15 +2,11 @@ package com.nextjob.back.project.web;
 
 import com.nextjob.back.project.domain.Project;
 import com.nextjob.back.project.service.ProjectService;
-import com.nextjob.back.user.service.UserService;
 import com.nextjob.base.util.CamelCaseMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,11 +26,9 @@ public class ProjectController {
      * @return
      */
     @PostMapping("/insert")
-    public Map<String, Object> insertProject(@RequestBody Project project) {
+    public ApiResponse<CamelCaseMap> insertProject(@RequestBody Project project) {
         int insertedCount = projectService.insertProject(project);
-        Map<String, Object> result = new HashMap<>();
-        result.put("success", insertedCount > 0);
-        return result;
+        return ApiResponse.ok(null);
     }
 
     /**
@@ -44,14 +38,14 @@ public class ProjectController {
      */
     @GetMapping("/{id}")
     @ResponseBody
-    public Map<String, Object> findProjectDetail(@PathVariable("id") int projectId) {
+    public ApiResponse<CamelCaseMap> findProjectDetail(@PathVariable("id") int projectId) {
         Map<String, Object> result = new HashMap<>();
         CamelCaseMap data = projectService.findProjectDetail(projectId);
 
         result.put("success", data != null);
         result.put("data", data);
 
-        return result;
+        return ApiResponse.ok(data);
     }
 
     /**
@@ -60,14 +54,12 @@ public class ProjectController {
      * @return
      */
     @PostMapping("/{projectId}/apply")
-    public Map<String, Object> applyToProject(
+    public ApiResponse<CamelCaseMap> applyToProject(
             @PathVariable("projectId") int projectId,
             @RequestBody Map<String, Object> body
     ) {
         int userId = (int) body.get("user_id");
         boolean success = projectService.applyProject(projectId, userId);
-        Map<String, Object> result = new HashMap<>();
-        result.put("success", success);
-        return result;
+        return ApiResponse.ok(null);
     }
 }

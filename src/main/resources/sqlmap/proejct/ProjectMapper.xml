@@ -17,7 +17,7 @@
             content,
             start_at,
             end_at,
-            project_type,
+            GetDetailCodeName('PROJECT_TYPE', project_type) AS project_type,
             image,
             type
         FROM projects

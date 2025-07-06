@@ -55,4 +55,12 @@ public class Notification extends Domain {
     public void setRead(Boolean read) {
         isRead = read;
     }
+
+    public String getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
+    }
 }

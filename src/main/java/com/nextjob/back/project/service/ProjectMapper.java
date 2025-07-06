@@ -15,4 +15,8 @@ public interface ProjectMapper {
     int insertProject(Project project);
     /* 프로젝트 상세 조회 */
     CamelCaseMap findProjectDetail(int projectId);
+    /* 프로젝트 팀장 조회 */
+    int findProjectCreatorId(int projectId);
+    /* 프로젝트 지원 */
+    int insertApplyRequest(int projectId, int userId, String requestType, String requestStatus);
 }

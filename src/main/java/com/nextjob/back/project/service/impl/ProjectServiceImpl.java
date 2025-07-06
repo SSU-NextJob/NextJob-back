@@ -27,4 +27,20 @@ public class ProjectServiceImpl implements ProjectService {
     public CamelCaseMap findProjectDetail(int projectId) {
         return projectMapper.findProjectDetail(projectId);
     }
+
+    @Override
+    public boolean applyProject(int projectId, int userId) {
+        String requestType = "APPLY";       // 요청 종류 : 지원
+        String requestStatus = "PENDING";   // 요청 상태 : 대기
+
+        // 1. 요청 등록
+        boolean successRequest = projectMapper.insertApplyRequest(projectId, userId, requestType, requestStatus) > 0;
+
+        // 2. 프로젝트 팀장 조회
+        int creatorId = projectMapper.findProjectCreatorId(projectId);
+
+        // 3. 알림 등록
+
+        return successRequest;
+    }
 }

@@ -53,4 +53,21 @@ public class ProjectController {
 
         return result;
     }
+
+    /**
+     * 프로젝트 지원
+     *
+     * @return
+     */
+    @PostMapping("/{projectId}/apply")
+    public Map<String, Object> applyToProject(
+            @PathVariable("projectId") int projectId,
+            @RequestBody Map<String, Object> body
+    ) {
+        int userId = (int) body.get("user_id");
+        boolean success = projectService.applyProject(projectId, userId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("success", success);
+        return result;
+    }
 }

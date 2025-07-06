@@ -9,4 +9,5 @@ import java.util.List;
 public interface ProjectService {
     int insertProject(Project project);
     CamelCaseMap findProjectDetail(int projectId);
+    boolean applyProject(int projectId, int userId);
 }

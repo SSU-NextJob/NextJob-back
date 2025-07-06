@@ -23,4 +23,27 @@
         FROM projects
         WHERE project_id = #{projectId}
     </select>
+
+    <!-- 프로젝트 팀장 조회 -->
+    <select id="findProjectCreatorId" resultType="int">
+        SELECT
+            user_id
+        FROM projects
+        WHERE project_id = #{projectId}
+    </select>
+
+    <!-- 프로젝트 지원 -->
+    <insert id="insertApplyRequest">
+        INSERT INTO requests (
+            project_id,
+            user_id,
+            request_type,
+            request_status
+        ) VALUES (
+             #{projectId},
+             #{userId},
+             #{requestType},
+             #{requestStatus}
+         )
+    </insert>
 </mapper>

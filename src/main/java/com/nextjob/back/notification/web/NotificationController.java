@@ -44,8 +44,8 @@ public class NotificationController {
     // 알림 확인
     @PatchMapping("/{notificationId}/read")
     public ApiResponse<CamelCaseMap> readNotification(@PathVariable("notificationId") int notificationId) {
-        CamelCaseMap notification = notificationService.readNotification(notificationId);
-        return ApiResponse.ok(notification);
+        notificationService.readNotification(notificationId);
+        return ApiResponse.ok(null);
     }
 
     // 알림 전체 확인
@@ -56,7 +56,7 @@ public class NotificationController {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 
-        List<CamelCaseMap> notifications = notificationService.readNotificationsByUserId(userId);
-        return ApiResponse.ok(notifications);
+        notificationService.readNotificationsByUserId(userId);
+        return ApiResponse.ok(null);
     }
 }

@@ -25,19 +25,17 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public CamelCaseMap readNotification(int notificationId) {
+    public void readNotification(int notificationId) {
         CamelCaseMap notification = notificationMapper.findNotificationByNotificationId(notificationId);
         if (notification == null) {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 
         notificationMapper.markNotificationAsRead(notificationId);
-        return notificationMapper.findNotificationByNotificationId(notificationId);
     }
 
     @Override
-    public List<CamelCaseMap> readNotificationsByUserId(int userId) {
+    public void readNotificationsByUserId(int userId) {
         notificationMapper.readAllNotificationsByUserId(userId);
-        return notificationMapper.findNotificationsByUserId(userId);
     }
 }

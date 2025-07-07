@@ -71,5 +71,10 @@ public class UserServiceImpl implements UserService {
     public void updateUser(int userId, String name, String techStack, String description) {
         userMapper.updateUser(userId, name, techStack, description);
     }
+
+    @Override
+    public void updateUserVisibility(int userId, Boolean isVisible) {
+        userMapper.updateUserVisibility(userId, isVisible);
+    }
 }
 

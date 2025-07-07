@@ -24,10 +24,14 @@ public interface UserMapper {
     /* 프로젝트 제안(사용자한테 요청) 알림 등록 */
     int insertNotification(Notification notification);
 
+    /* 사용자 정보 수정 */
     void updateUser(
-            @Param("userId")int userId,
-            @Param("name")String name,
-            @Param("techStack")String techStack,
-            @Param("description")String description
+            @Param("userId") int userId,
+            @Param("name") String name,
+            @Param("techStack") String techStack,
+            @Param("description") String description
     );
+
+    /* 사용자 노출 여부 수정 */
+    void updateUserVisibility(@Param("userId") int userId, @Param("isVisible") Boolean isVisible);
 }

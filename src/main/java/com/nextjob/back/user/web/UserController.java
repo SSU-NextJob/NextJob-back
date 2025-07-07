@@ -78,6 +78,27 @@ public class UserController {
     }
 
     /**
+     * 사용자 노출 여부 수정
+     *
+     * @param body(userId, isVisible) 사용자 정보
+     * @return userId에 해당하는 사용자 노출 여부 수정 성공 여부
+     */
+    @PatchMapping("/visibility")
+    public ApiResponse<CamelCaseMap> updateUserVisibility(@RequestBody Map<String, Object> body) {
+        int userId = Integer.parseInt(body.get("userId").toString());
+        Boolean isVisible = Boolean.parseBoolean(body.get("isVisible").toString());
+
+        CamelCaseMap user = userService.findUserDetail(userId);
+        if(ObjectUtils.isEmpty(user)) {
+            throw new CustomException(ErrorCode.NOT_FOUND);
+        }
+
+        userService.updateUserVisibility(userId, isVisible);
+
+        return ApiResponse.ok(null);
+    }
+
+    /**
      * 프로젝트 제안(사용자한테 요청)
      *
      * @param userId 제안 받을 사람의 userId

@@ -1,5 +1,7 @@
 package com.nextjob.back.project.service.impl;
 
+import com.nextjob.back.notification.domain.Notification;
+import com.nextjob.back.notification.service.NotificationMapper;
 import com.nextjob.back.project.domain.Project;
 import com.nextjob.back.project.service.ProjectMapper;
 import com.nextjob.back.project.service.ProjectService;
@@ -13,9 +15,11 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
     private ProjectMapper projectMapper;
+    private NotificationMapper notificationMapper;
 
-    public ProjectServiceImpl(ProjectMapper projectMapper) {
+    public ProjectServiceImpl(ProjectMapper projectMapper, NotificationMapper notificationMapper) {
         this.projectMapper = projectMapper;
+        this.notificationMapper = notificationMapper;
     }
 
     @Override
@@ -40,6 +44,12 @@ public class ProjectServiceImpl implements ProjectService {
         int creatorId = projectMapper.findProjectCreatorId(projectId);
 
         // 3. 알림 등록
+        Notification notification = new Notification();
+        notification.setTitle("프로젝트 지원 요청");
+        notification.setContent("프로젝트 지원을 요청드립니다.");
+        notification.setNotificationType("APPLY_NOTIFICATION");
+        notification.setUserId(creatorId);
+        boolean successNotification = notificationMapper.insertNotification(notification) > 0;
 
         return successRequest;
     }

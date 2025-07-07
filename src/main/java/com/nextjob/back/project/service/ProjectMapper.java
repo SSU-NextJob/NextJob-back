@@ -2,7 +2,6 @@ package com.nextjob.back.project.service;
 
 import com.nextjob.back.project.domain.Project;
 import com.nextjob.back.project.web.ProjectSearchCriteria;
-import com.nextjob.back.user.web.UserSearchCriteria;
 import com.nextjob.base.util.CamelCaseMap;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

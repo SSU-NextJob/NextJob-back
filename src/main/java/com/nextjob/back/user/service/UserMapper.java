@@ -13,8 +13,6 @@ public interface UserMapper {
     /* 사용자 상세 조회 */
     CamelCaseMap findUserDetail(@Param("userId")int userId);
 
-    CamelCaseMap findUserDetailByUserId(int userId);
-
     /* 사용자 목록 조회 */
     List<CamelCaseMap> findUserList(@Param("userType")String userType, @Param("search") String search);
 

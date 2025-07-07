@@ -6,6 +6,7 @@ import com.nextjob.base.exception.CustomException;
 import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -28,8 +29,8 @@ public class NotificationController {
     // 알림 조회
     @GetMapping
     public ApiResponse<List<CamelCaseMap>> findNotificationList(@RequestParam int userId) {
-        CamelCaseMap user = userService.findUserDetailByUserId(userId);
-        if (user == null) {
+        CamelCaseMap user = userService.findUserDetail(userId);
+        if (ObjectUtils.isEmpty(user)) {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 
@@ -51,8 +52,8 @@ public class NotificationController {
     // 알림 전체 확인
     @PatchMapping("/read-all")
     public ApiResponse<List<CamelCaseMap>> readAllNotifications(@RequestParam int userId) {
-        CamelCaseMap user = userService.findUserDetailByUserId(userId);
-        if (user == null) {
+        CamelCaseMap user = userService.findUserDetail(userId);
+        if (ObjectUtils.isEmpty(user)) {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 

@@ -9,8 +9,6 @@ public interface UserService {
     /* 사용자 상세 조회 */
     CamelCaseMap findUserDetail(int userId);
 
-    CamelCaseMap findUserDetailByUserId(int userId);
-
     /* 사용자 목록 조회 */
     List<CamelCaseMap> findUserList(String userType, String search);
 

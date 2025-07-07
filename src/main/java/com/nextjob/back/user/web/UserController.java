@@ -68,7 +68,7 @@ public class UserController {
 
         CamelCaseMap user = userService.findUserDetail(userId);
         System.out.println(user);
-        if(ObjectUtils.isEmpty(user)) {
+        if (ObjectUtils.isEmpty(user)) {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 
@@ -89,7 +89,7 @@ public class UserController {
         Boolean isVisible = Boolean.parseBoolean(body.get("isVisible").toString());
 
         CamelCaseMap user = userService.findUserDetail(userId);
-        if(ObjectUtils.isEmpty(user)) {
+        if (ObjectUtils.isEmpty(user)) {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 

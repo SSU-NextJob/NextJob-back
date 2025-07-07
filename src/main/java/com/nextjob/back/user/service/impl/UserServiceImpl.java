@@ -28,12 +28,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.findUserDetail(userId);
     }
 
-    @Override
-    public CamelCaseMap findUserDetailByUserId(int userId) {
-        return userMapper.findUserDetailByUserId(userId);
-    }
-
-
     /**
      * 사용자 목록 조회
      *

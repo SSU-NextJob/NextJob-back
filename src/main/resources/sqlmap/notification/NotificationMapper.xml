@@ -24,4 +24,20 @@
         SET is_read = TRUE
         WHERE user_id = #{userId}
     </select>
+
+    <insert id="insertNotification">
+        INSERT INTO notifications (
+            title
+          , content
+          , notification_type
+          , user_id
+          , create_date
+        ) VALUES (
+           #{title}
+         , #{content}
+         , #{notificationType}
+         , #{userId}
+         , NOW()
+         )
+    </insert>
 </mapper>

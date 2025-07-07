@@ -1,5 +1,6 @@
 package com.nextjob.back.notification.service;
 
+import com.nextjob.back.notification.domain.Notification;
 import com.nextjob.base.util.CamelCaseMap;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,4 +17,6 @@ public interface NotificationMapper {
     void markNotificationAsRead(int notificationId);
 
     void readAllNotificationsByUserId(int userId);
+
+    int insertNotification(Notification notification);
 }

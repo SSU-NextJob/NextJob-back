@@ -16,4 +16,7 @@ public interface UserService {
 
     /* 프로젝트 제안(사용자한테 요청) */
     boolean suggestToUser(int userId, int projectId);
+
+    /* 사용자 정보 수정 */
+    void updateUser(int userId, String name, String techStack, String description);
 }

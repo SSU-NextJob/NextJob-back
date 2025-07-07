@@ -23,4 +23,11 @@ public interface UserMapper {
 
     /* 프로젝트 제안(사용자한테 요청) 알림 등록 */
     int insertNotification(Notification notification);
+
+    void updateUser(
+            @Param("userId")int userId,
+            @Param("name")String name,
+            @Param("techStack")String techStack,
+            @Param("description")String description
+    );
 }

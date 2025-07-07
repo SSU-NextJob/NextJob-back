@@ -54,6 +54,30 @@ public class UserController {
     }
 
     /**
+     * 사용자 정보 수정
+     *
+     * @param body(name, techStack, description, profileImage) 사용자 정보
+     * @return userId에 해당하는 사용자 정보 수정 성공 여부
+     */
+    @PatchMapping("/me")
+    public ApiResponse<CamelCaseMap> updateUser(@RequestBody Map<String, Object> body) {
+        int userId = Integer.parseInt(body.get("userId").toString());
+        String name = body.get("name").toString();
+        String techStack = body.get("techStack").toString();
+        String description = body.get("description").toString();
+
+        CamelCaseMap user = userService.findUserDetail(userId);
+        System.out.println(user);
+        if(ObjectUtils.isEmpty(user)) {
+            throw new CustomException(ErrorCode.NOT_FOUND);
+        }
+
+        userService.updateUser(userId, name, techStack, description);
+
+        return ApiResponse.ok(null);
+    }
+
+    /**
      * 프로젝트 제안(사용자한테 요청)
      *
      * @param userId 제안 받을 사람의 userId

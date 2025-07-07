@@ -66,5 +66,10 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.insertNotification(notification) > 0;
     }
+
+    @Override
+    public void updateUser(int userId, String name, String techStack, String description) {
+        userMapper.updateUser(userId, name, techStack, description);
+    }
 }
 

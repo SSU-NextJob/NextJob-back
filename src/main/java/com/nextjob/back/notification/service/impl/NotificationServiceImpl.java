@@ -5,7 +5,6 @@ import com.nextjob.back.notification.service.NotificationService;
 import com.nextjob.base.exception.CustomException;
 import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
-import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

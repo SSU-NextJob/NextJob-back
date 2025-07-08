@@ -18,4 +18,8 @@ public interface ProjectMapper {
     int findProjectCreatorId(int projectId);
     /* 프로젝트 지원 */
     int insertApplyRequest(int projectId, int userId, String requestType, String requestStatus);
+    /* 생성한 프로젝트 조회 */
+    List<CamelCaseMap> findCreateProjectList(ProjectSearchCriteria projectSearchCriteria);
+    /* 참여한 프로젝트 조회 */
+    List<CamelCaseMap> findParticipationProjectList(ProjectSearchCriteria projectSearchCriteria);
 }

@@ -68,13 +68,13 @@ public class ProjectController {
     }
 
     /**
-     * My Project  프로젝트 조회
+     * My Project 프로젝트 조회
      *
      * @param projectSearchCriteria
      * @return
      */
     @GetMapping
-    public ApiResponse<Map<String ,Object>> findCreateProjectList(ProjectSearchCriteria projectSearchCriteria) {
+    public ApiResponse<Map<String ,Object>> findMyProjectList(ProjectSearchCriteria projectSearchCriteria) {
         Map<String, Object> result = new HashMap<>();
         // 생성한 프로젝트 조회
         List<CamelCaseMap> createProjectList = projectService.findCreateProjectList(projectSearchCriteria);

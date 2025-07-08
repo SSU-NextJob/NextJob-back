@@ -79,4 +79,16 @@
                  , NOW()
                )
     </insert>
+
+    <update id="updateUser">
+        UPDATE users
+        SET name = #{name}, tech_stack = #{techStack}, description = #{description}
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="updateUserVisibility">
+        UPDATE users
+        SET is_visible = #{isVisible}
+        WHERE user_id = #{userId}
+    </update>
 </mapper>

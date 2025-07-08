@@ -28,12 +28,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.findUserDetail(userId);
     }
 
-    @Override
-    public CamelCaseMap findUserDetailByUserId(int userId) {
-        return userMapper.findUserDetailByUserId(userId);
-    }
-
-
     /**
      * 사용자 목록 조회
      *
@@ -65,6 +59,16 @@ public class UserServiceImpl implements UserService {
         notification.setUserId(userId);
 
         return userMapper.insertNotification(notification) > 0;
+    }
+
+    @Override
+    public void updateUser(int userId, String name, String techStack, String description) {
+        userMapper.updateUser(userId, name, techStack, description);
+    }
+
+    @Override
+    public void updateUserVisibility(int userId, Boolean isVisible) {
+        userMapper.updateUserVisibility(userId, isVisible);
     }
 }
 

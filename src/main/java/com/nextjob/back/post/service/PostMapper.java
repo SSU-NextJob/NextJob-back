@@ -10,10 +10,14 @@ import java.util.List;
 
 @Mapper
 public interface PostMapper {
-    /* 게시글 생성 */
-    int insertPost(Post post);
     /* 게시글 목록 */
     List<PostListResponse> findPostList(CamelCaseMap param);
     /* 게시글 상세 */
     PostDetailResponse findPostDetail(int postId);
+    /* 게시글 생성 */
+    int insertPost(Post post);
+    /* 게시글 수정 */
+    int updatePost(Post post);
+    /* 게시글 삭제 */
+    int deletePost(int postId);
 }

@@ -8,7 +8,9 @@ import com.nextjob.base.util.CamelCaseMap;
 import java.util.List;
 
 public interface PostService {
-    int insertPost(Post post);
     List<PostListResponse> findPostList(CamelCaseMap param);
     PostDetailResponse findPostDetail(int postId);
+    int insertPost(Post post);
+    int updatePost(Post post);
+    int deletePost(int postId);
 }

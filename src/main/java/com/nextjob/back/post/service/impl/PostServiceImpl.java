@@ -19,11 +19,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public int insertPost(Post post) {
-        return postMapper.insertPost(post);
-    }
-
-    @Override
     public List<PostListResponse> findPostList(CamelCaseMap param) {
         return postMapper.findPostList(param);
     }
@@ -32,4 +27,20 @@ public class PostServiceImpl implements PostService {
     public PostDetailResponse findPostDetail(int postId) {
         return postMapper.findPostDetail(postId);
     }
+
+    @Override
+    public int insertPost(Post post) {
+        return postMapper.insertPost(post);
+    }
+
+    @Override
+    public int updatePost(Post post) {
+        return postMapper.updatePost(post);
+    }
+
+    @Override
+    public int deletePost(int postId) {
+        return postMapper.deletePost(postId);
+    }
+
 }

@@ -36,7 +36,7 @@
             pr.end_at
         FROM posts p
         INNER JOIN projects pr ON p.project_id = pr.project_id
-        <where>
+        WHERE 1=1
             <if test="type != null and type != ''">
                 AND pr.type = #{type}
             </if>
@@ -46,7 +46,7 @@
             <if test="search != null and search != ''">
                 AND p.title LIKE CONCAT('%', #{search}, '%')
             </if>
-        </where>
+            AND p.delete_date IS NULL
         ORDER BY p.create_date DESC
         LIMIT #{limit} OFFSET #{offset}
     </select>
@@ -68,7 +68,7 @@
             pr.end_at
         FROM posts p
         INNER JOIN projects pr ON p.project_id = pr.project_id
-        WHERE p.post_id = #{postId}
+        WHERE p.post_id = #{postId} AND p.delete_date IS NULL
     </select>
 
     <insert id="insertPost" parameterType="com.nextjob.back.post.domain.Post">
@@ -80,12 +80,28 @@
             content,
             role_type
         ) VALUES (
-                     #{userId},
-                     #{userName},
-                     #{projectId},
-                     #{title},
-                     #{content},
-                     #{roleType}
-                 )
+             #{userId},
+             #{userName},
+             #{projectId},
+             #{title},
+             #{content},
+             #{roleType}
+         )
     </insert>
+
+    <update id="updatePost" parameterType="com.nextjob.back.post.domain.Post">
+        UPDATE posts
+        SET
+            title = #{title},
+            content = #{content},
+            role_type = #{roleType},
+            modify_date = NOW()
+        WHERE post_id = #{postId}
+    </update>
+
+    <update id="deletePost" parameterType="int">
+        UPDATE posts
+        SET delete_date = NOW()
+        WHERE post_id = #{postId}
+    </update>
 </mapper>

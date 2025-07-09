@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nextjob.back.post.service.PostMapper">
-    <insert id="insertPost" parameterType="com.nextjob.back.post.domain.Post">
-        INSERT INTO posts (
-            user_id,
-            user_name,
-            project_id,
-            title,
-            content,
-            role_type
-        ) VALUES (
-             #{userId},
-             #{userName},
-             #{projectId},
-             #{title},
-             #{content},
-             #{roleType}
-         )
-    </insert>
-
-    <resultMap id="PostListResultMap" type="com.nextjob.back.post.web.PostSearchCriteria">
+    <resultMap id="PostListResultMap" type="com.nextjob.back.post.web.PostListResponse">
         <id property="postId" column="post_id"/>
         <result property="title" column="title"/>
         <result property="roleType" column="role_type"/>
@@ -29,11 +11,16 @@
         <association property="project" javaType="com.nextjob.back.project.web.ProjectInfo">
             <result property="projectId" column="project_id"/>
             <result property="name" column="project_name"/>
+            <result property="content" column="project_content"/>
             <result property="type" column="project_type"/>
             <result property="startAt" column="start_at"/>
             <result property="endAt" column="end_at"/>
         </association>
     </resultMap>
+    <resultMap id="PostDetailResultMap" type="com.nextjob.back.post.web.PostDetailResponse" extends="PostListResultMap">
+        <result property="content" column="content"/>
+    </resultMap>
+
     <select id="findPostList" parameterType="map" resultMap="PostListResultMap">
         SELECT
             p.post_id,
@@ -64,24 +51,41 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <select id="findPostDetail" parameterType="int" resultType="CamelCaseMap">
+    <select id="findPostDetail" parameterType="int" resultMap="PostDetailResultMap">
         SELECT
             p.post_id,
             p.title,
             p.content,
-            p.role_type,
+            GetDetailCodeName('USER_TYPE', p.role_type) as role_type,
             p.create_date,
             p.user_id,
             p.user_name,
             pr.project_id,
-            pr.name,
+            pr.name AS project_name,
             pr.content AS project_content,
-            pr.type,
+            pr.type AS project_type,
             pr.start_at,
-            pr.end_at,
-            pr.image
+            pr.end_at
         FROM posts p
         INNER JOIN projects pr ON p.project_id = pr.project_id
         WHERE p.post_id = #{postId}
     </select>
+
+    <insert id="insertPost" parameterType="com.nextjob.back.post.domain.Post">
+        INSERT INTO posts (
+            user_id,
+            user_name,
+            project_id,
+            title,
+            content,
+            role_type
+        ) VALUES (
+                     #{userId},
+                     #{userName},
+                     #{projectId},
+                     #{title},
+                     #{content},
+                     #{roleType}
+                 )
+    </insert>
 </mapper>

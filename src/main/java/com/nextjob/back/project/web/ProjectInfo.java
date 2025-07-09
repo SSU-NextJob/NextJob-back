@@ -5,8 +5,11 @@ import java.util.Date;
 public class ProjectInfo {
     private int projectId;
     private String name;
+    private String content;
     private String type;
     private Date startAt;
+    private Date endAt;
+    private String image;
 
     public Date getEndAt() {
         return endAt;
@@ -48,5 +51,19 @@ public class ProjectInfo {
         this.projectId = projectId;
     }
 
-    private Date endAt;
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

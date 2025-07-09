@@ -6,7 +6,7 @@ import com.nextjob.base.web.servlet.search.Search;
 import java.util.Date;
 
 @SuppressWarnings("serial")
-public class PostSearchCriteria implements Search {
+public class PostListResponse implements Search {
     private int postId;
     private String title;
     private String roleType;

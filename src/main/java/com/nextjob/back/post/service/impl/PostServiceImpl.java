@@ -3,7 +3,8 @@ package com.nextjob.back.post.service.impl;
 import com.nextjob.back.post.domain.Post;
 import com.nextjob.back.post.service.PostMapper;
 import com.nextjob.back.post.service.PostService;
-import com.nextjob.back.post.web.PostSearchCriteria;
+import com.nextjob.back.post.web.PostDetailResponse;
+import com.nextjob.back.post.web.PostListResponse;
 import com.nextjob.base.util.CamelCaseMap;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +24,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostSearchCriteria> findPostList(CamelCaseMap param) {
+    public List<PostListResponse> findPostList(CamelCaseMap param) {
         return postMapper.findPostList(param);
     }
 
     @Override
-    public PostSearchCriteria findPostDetail(int postId) {
+    public PostDetailResponse findPostDetail(int postId) {
         return postMapper.findPostDetail(postId);
     }
 }

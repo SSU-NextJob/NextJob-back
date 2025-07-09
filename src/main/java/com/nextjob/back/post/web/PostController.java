@@ -4,10 +4,11 @@ import com.nextjob.back.post.domain.Post;
 import com.nextjob.back.post.service.PostService;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/posts")
@@ -28,5 +29,29 @@ public class PostController {
     public ApiResponse<CamelCaseMap> insertProject(@RequestBody Post post) {
         int insertedCount = postService.insertPost(post);
         return ApiResponse.ok(null);
+    }
+
+    /**
+     * 게시글 목록 조회
+     * @param type, role, search, page, pageSize
+     * @return ApiResponse
+     */
+    @GetMapping
+    public ApiResponse<List<PostSearchCriteria>> findPostList(
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        CamelCaseMap param = new CamelCaseMap();
+        param.put("type", type);
+        param.put("role", role);
+        param.put("search", search);
+        param.put("offset", (page - 1) * pageSize);
+        param.put("limit", pageSize);
+
+        List<PostSearchCriteria> list = postService.findPostList(param);
+        return ApiResponse.ok(list);
     }
 }

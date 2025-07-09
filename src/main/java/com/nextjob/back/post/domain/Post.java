@@ -1,4 +1,4 @@
-package com.nextjob.back.board.domain;
+package com.nextjob.back.post.domain;
 
 import com.nextjob.base.domain.Domain;
 

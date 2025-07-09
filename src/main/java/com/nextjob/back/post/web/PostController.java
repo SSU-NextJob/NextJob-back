@@ -1,8 +1,7 @@
-package com.nextjob.back.board.web;
+package com.nextjob.back.post.web;
 
-import com.nextjob.back.board.domain.Post;
-import com.nextjob.back.board.service.BoardService;
-import com.nextjob.back.project.domain.Project;
+import com.nextjob.back.post.domain.Post;
+import com.nextjob.back.post.service.PostService;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/board")
-public class BoardController {
-    private BoardService boardService;
+@RequestMapping(value = "/posts")
+public class PostController {
+    private PostService postService;
 
-    public BoardController(BoardService boardService) {
-        this.boardService = boardService;
+    public PostController(PostService postService) {
+        this.postService = postService;
     }
 
     /**
@@ -27,7 +26,7 @@ public class BoardController {
      */
     @PostMapping("/insert")
     public ApiResponse<CamelCaseMap> insertProject(@RequestBody Post post) {
-        int insertedCount = boardService.insertPost(post);
+        int insertedCount = postService.insertPost(post);
         return ApiResponse.ok(null);
     }
 }

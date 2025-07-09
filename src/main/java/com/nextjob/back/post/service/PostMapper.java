@@ -1,10 +1,10 @@
-package com.nextjob.back.board.service;
+package com.nextjob.back.post.service;
 
-import com.nextjob.back.board.domain.Post;
+import com.nextjob.back.post.domain.Post;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface BoardMapper {
+public interface PostMapper {
     /* 프로젝트 생성 */
     int insertPost(Post post);
 }

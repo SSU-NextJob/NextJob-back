@@ -18,4 +18,70 @@
              #{roleType}
          )
     </insert>
+
+    <resultMap id="PostListResultMap" type="com.nextjob.back.post.web.PostSearchCriteria">
+        <id property="postId" column="post_id"/>
+        <result property="title" column="title"/>
+        <result property="roleType" column="role_type"/>
+        <result property="createDate" column="create_date"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <association property="project" javaType="com.nextjob.back.project.web.ProjectInfo">
+            <result property="projectId" column="project_id"/>
+            <result property="name" column="project_name"/>
+            <result property="type" column="project_type"/>
+            <result property="startAt" column="start_at"/>
+            <result property="endAt" column="end_at"/>
+        </association>
+    </resultMap>
+    <select id="findPostList" parameterType="map" resultMap="PostListResultMap">
+        SELECT
+            p.post_id,
+            p.title,
+            GetDetailCodeName('USER_TYPE', p.role_type) as role_type,
+            p.create_date,
+            p.user_id,
+            p.user_name,
+            pr.project_id,
+            pr.name AS project_name,
+            pr.type AS project_type,
+            pr.start_at,
+            pr.end_at
+        FROM posts p
+        INNER JOIN projects pr ON p.project_id = pr.project_id
+        <where>
+            <if test="type != null and type != ''">
+                AND pr.type = #{type}
+            </if>
+            <if test="role != null and role != ''">
+                AND p.role_type = #{role}
+            </if>
+            <if test="search != null and search != ''">
+                AND p.title LIKE CONCAT('%', #{search}, '%')
+            </if>
+        </where>
+        ORDER BY p.create_date DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="findPostDetail" parameterType="int" resultType="CamelCaseMap">
+        SELECT
+            p.post_id,
+            p.title,
+            p.content,
+            p.role_type,
+            p.create_date,
+            p.user_id,
+            p.user_name,
+            pr.project_id,
+            pr.name,
+            pr.content AS project_content,
+            pr.type,
+            pr.start_at,
+            pr.end_at,
+            pr.image
+        FROM posts p
+        INNER JOIN projects pr ON p.project_id = pr.project_id
+        WHERE p.post_id = #{postId}
+    </select>
 </mapper>

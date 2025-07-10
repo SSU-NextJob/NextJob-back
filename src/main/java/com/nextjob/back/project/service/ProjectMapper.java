@@ -20,4 +20,6 @@ public interface ProjectMapper {
     int insertApplyRequest(int projectId, int userId, String requestType, String requestStatus);
     /* 프로젝트 멤버 추가 */
     int insertMember(int projectId, int userId, String jobTitle);
+    /* 프로젝트 멤버 확인 */
+    int selectMemberByUserId(int projectId, int userId);
 }

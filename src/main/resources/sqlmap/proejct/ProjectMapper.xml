@@ -60,4 +60,35 @@
         FROM project_members
         WHERE project_id = #{projectId} and user_id = #{userId}
     </select>
+
+    <!-- 내가 만든 프로젝트 목록 조회 -->
+    <select id="findCreateProjectList" resultType="CamelCaseMap">
+        /* ProjectMapper.findCreateProjectList */
+        SELECT project_id
+             , name
+             , content
+             , type
+             , start_at
+             , end_at
+         FROM projects
+        WHERE 1=1
+          AND user_id = #{userId}
+    </select>
+
+    <!-- 내가 참여한 프로젝트 목록 조회 -->
+    <select id="findParticipationProjectList" resultType="CamelCaseMap">
+        /* ProjectMapper.findParticipationProjectList */
+        SELECT proj.project_id
+             , proj.name
+             , proj.content
+             , proj.type
+             , proj.start_at
+             , proj.end_at
+         FROM projects proj
+    LEFT JOIN project_members proj_mem
+           ON proj.project_id = proj_mem.project_id
+        WHERE 1=1
+          AND proj_mem.user_id = #{userId}
+          AND proj_mem.job_title = 'MEMBER'
+    </select>
 </mapper>

@@ -1,5 +1,7 @@
 package com.nextjob.back.user.web;
 
+import com.nextjob.back.project.service.ProjectService;
+import com.nextjob.back.project.web.ProjectSearchCriteria;
 import com.nextjob.back.user.service.UserService;
 import com.nextjob.base.exception.CustomException;
 import com.nextjob.base.exception.ErrorCode;
@@ -18,8 +20,11 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    private final ProjectService projectService;
+
+    public UserController(UserService userService, ProjectService projectService) {
         this.userService = userService;
+        this.projectService = projectService;
     }
 
     /**
@@ -113,6 +118,20 @@ public class UserController {
 
         result.put("success", data);
         return ApiResponse.ok(null);
+    }
+
+    /**
+     * 내 프로젝트 제안 시 보여줄 내가 생성한 프로젝트 목록 조회
+     *
+     * @param userId 로그인한 사람의 userId
+     * @return 로그인한 사람이 생성한 프로젝트 목록을 List로 반환
+     */
+    @GetMapping("/{userId}/projects")
+    public ApiResponse<List<CamelCaseMap>> findCreateProjectList(@PathVariable("userId") int userId) {
+        ProjectSearchCriteria projectSearchCriteria = new ProjectSearchCriteria();
+        projectSearchCriteria.setUserId(String.valueOf(userId));
+        List<CamelCaseMap> createProjectList = projectService.findCreateProjectList(projectSearchCriteria);
+        return ApiResponse.ok(createProjectList);
     }
 
 

@@ -24,6 +24,16 @@ public class UserSearchCriteria extends Domain implements Search {
     /* 프로필이미지 */
     private String profileImage;
 
+    /* 개발분야 */
+    private String userType;
+
+    /* 검색어 */
+    private String search;
+
+    private int offset;
+
+    private int limit;
+
     public int getUserId() {
         return userId;
     }
@@ -70,5 +80,37 @@ public class UserSearchCriteria extends Domain implements Search {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
     }
 }

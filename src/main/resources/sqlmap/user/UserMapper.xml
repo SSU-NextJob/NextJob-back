@@ -35,12 +35,14 @@
           FROM users
          WHERE 1=1
            AND is_visible = 1
-        <if test="userType != null" >
+        <if test="userType != null and userType != ''" >
            AND user_type = #{userType}
         </if>
-        <if test="search != null">
-            AND name LIKE CONCAT('%', #{search}, '%')
+        <if test="search != null and search != ''">
+           AND name LIKE CONCAT('%', #{search}, '%')
         </if>
+        ORDER BY user_id DESC
+        LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <insert id="insertSuggestRequest">

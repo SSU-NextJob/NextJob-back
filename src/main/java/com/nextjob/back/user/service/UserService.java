@@ -1,5 +1,6 @@
 package com.nextjob.back.user.service;
 
+import com.nextjob.back.user.web.UserSearchCriteria;
 import com.nextjob.base.util.CamelCaseMap;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface UserService {
     CamelCaseMap findUserDetail(int userId);
 
     /* 사용자 목록 조회 */
-    List<CamelCaseMap> findUserList(String userType, String search);
+    List<CamelCaseMap> findUserList(UserSearchCriteria userSearchCriteria);
 
     /* 프로젝트 제안(사용자한테 요청) */
     boolean suggestToUser(int userId, int projectId);

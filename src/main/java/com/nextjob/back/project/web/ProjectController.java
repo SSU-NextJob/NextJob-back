@@ -64,7 +64,11 @@ public class ProjectController {
     ) {
         int userId = (int) body.get("user_id");
         boolean success = projectService.applyProject(projectId, userId);
-        return ApiResponse.ok(null);
+        if (success) {
+            return ApiResponse.ok(null);
+        } else {
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
     }
 
     /**

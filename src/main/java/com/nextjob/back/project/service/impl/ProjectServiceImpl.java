@@ -67,4 +67,26 @@ public class ProjectServiceImpl implements ProjectService {
     public void insertProjectMember(int projectId, int userId, String jobTitle) {
         projectMapper.insertMember(projectId, userId, jobTitle);
     }
+
+    /**
+     * 생성한 프로젝트 조회
+     *
+     * @param projectSearchCriteria
+     * @return
+     */
+    @Override
+    public List<CamelCaseMap> findCreateProjectList(ProjectSearchCriteria projectSearchCriteria) {
+        return projectMapper.findCreateProjectList(projectSearchCriteria);
+    }
+
+    /**
+     * 참여한 프로젝트 조회
+     *
+     * @param projectSearchCriteria
+     * @return
+     */
+    @Override
+    public List<CamelCaseMap> findParticipationProjectList(ProjectSearchCriteria projectSearchCriteria) {
+        return projectMapper.findParticipationProjectList(projectSearchCriteria);
+    }
 }

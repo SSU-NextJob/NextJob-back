@@ -18,4 +18,8 @@ public interface ProjectMapper {
     void insertMember(int projectId, int userId, String jobTitle);
     /* 프로젝트 멤버 확인 */
     int selectMemberByUserId(int projectId, int userId);
+    /* 생성한 프로젝트 조회 */
+    List<CamelCaseMap> findCreateProjectList(ProjectSearchCriteria projectSearchCriteria);
+    /* 참여한 프로젝트 조회 */
+    List<CamelCaseMap> findParticipationProjectList(ProjectSearchCriteria projectSearchCriteria);
 }

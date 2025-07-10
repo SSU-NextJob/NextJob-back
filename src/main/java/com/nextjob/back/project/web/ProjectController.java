@@ -6,9 +6,11 @@ import com.nextjob.base.exception.CustomException;
 import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -67,5 +69,31 @@ public class ProjectController {
         } else {
             throw new CustomException(ErrorCode.BAD_REQUEST);
         }
+    }
+
+    /**
+     * My Project 프로젝트 조회
+     *
+     * @param projectSearchCriteria
+     * @return
+     */
+    @GetMapping
+    public ApiResponse<Map<String ,Object>> findMyProjectList(ProjectSearchCriteria projectSearchCriteria) {
+        Map<String, Object> result = new HashMap<>();
+        // 생성한 프로젝트 조회
+        List<CamelCaseMap> createProjectList = projectService.findCreateProjectList(projectSearchCriteria);
+        if(ObjectUtils.isEmpty(createProjectList)) {
+            throw new CustomException(ErrorCode.NOT_FOUND);
+        }
+
+        // 참여한 프로젝트 조회
+        List<CamelCaseMap> participationProjectList = projectService.findParticipationProjectList(projectSearchCriteria);
+        if(ObjectUtils.isEmpty(participationProjectList)) {
+            throw new CustomException(ErrorCode.NOT_FOUND);
+        }
+        result.put("createdProject", createProjectList);
+        result.put("participationProject", participationProjectList);
+
+        return ApiResponse.ok(result);
     }
 }

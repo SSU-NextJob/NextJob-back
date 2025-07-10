@@ -18,4 +18,6 @@ public interface ProjectMapper {
     int findProjectCreatorId(int projectId);
     /* 프로젝트 지원 */
     int insertApplyRequest(int projectId, int userId, String requestType, String requestStatus);
+    /* 프로젝트 멤버 추가 */
+    int insertMember(int projectId, int userId, String jobTitle);
 }

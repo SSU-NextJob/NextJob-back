@@ -52,4 +52,12 @@
         INSERT INTO project_members (project_id, user_id, job_title)
         VALUES (#{projectId}, #{userId}, #{jobTitle});
     </insert>
+
+    <!-- 프로젝트 멤버 확인 -->
+    <select id="selectMemberByUserId" resultType="int">
+        SELECT
+            count(*)
+        FROM project_members
+        WHERE project_id = #{projectId} and user_id = #{userId}
+    </select>
 </mapper>

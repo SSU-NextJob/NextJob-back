@@ -40,6 +40,12 @@ public class ProjectServiceImpl implements ProjectService {
         String requestType = "APPLY";       // 요청 종류 : 지원
         String requestStatus = "PENDING";   // 요청 상태 : 대기
 
+        // 0. 기존 요청이 있는지 확인
+        int checkMemer = projectMapper.selectMemberByUserId(projectId, userId);
+        if(checkMemer > 0) {
+            return false;
+        }
+
         // 1. 요청 등록
         boolean successRequest = projectMapper.insertApplyRequest(projectId, userId, requestType, requestStatus) > 0;
 

@@ -2,6 +2,8 @@ package com.nextjob.back.project.web;
 
 import com.nextjob.back.project.domain.Project;
 import com.nextjob.back.project.service.ProjectService;
+import com.nextjob.base.exception.CustomException;
+import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +62,10 @@ public class ProjectController {
     ) {
         int userId = (int) body.get("userId");
         boolean success = projectService.applyProject(projectId, userId);
-        return ApiResponse.ok(null);
+        if (success) {
+            return ApiResponse.ok(null);
+        } else {
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
     }
 }

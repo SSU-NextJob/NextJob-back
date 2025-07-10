@@ -48,6 +48,9 @@
             <if test="search != null and search != ''">
                 AND p.title LIKE CONCAT('%', #{search}, '%')
             </if>
+            <if test="userId != null and userId != ''">
+                AND p.user_id = #{userId}
+            </if>
             AND p.delete_date IS NULL
         ORDER BY p.create_date DESC
         LIMIT #{limit} OFFSET #{offset}

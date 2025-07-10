@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nextjob.back.code.service.DetailCodesMapper">
+
+    <select id="findDetailCodeList" resultType="CamelCaseMap">
+        /* DetailCodesMapper.findDetailCodeList */
+        SELECT detail_code      /* 상세코드 */
+             , detail_name      /* 코드명 */
+          FROM detail_codes
+         WHERE 1=1
+           AND is_use = 1
+           AND group_code = #{groupCode}
+    </select>
+
+</mapper>

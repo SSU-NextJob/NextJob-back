@@ -14,6 +14,8 @@ public abstract class Domain implements Serializable {
 
     private int modifyId;
 
+    private Date deleteDate;
+
     public Domain() {
 
     }
@@ -56,5 +58,13 @@ public abstract class Domain implements Serializable {
 
     public void setModifyId(int modifyId) {
         this.modifyId = modifyId;
+    }
+
+    public Date getDeleteDate() {
+        return deleteDate;
+    }
+
+    public void setDeleteDate(Date deleteDate) {
+        this.deleteDate = deleteDate;
     }
 }

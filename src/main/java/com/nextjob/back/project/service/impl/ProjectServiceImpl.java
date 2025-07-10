@@ -5,11 +5,8 @@ import com.nextjob.back.notification.service.NotificationMapper;
 import com.nextjob.back.project.domain.Project;
 import com.nextjob.back.project.service.ProjectMapper;
 import com.nextjob.back.project.service.ProjectService;
-import com.nextjob.back.project.web.ProjectSearchCriteria;
 import com.nextjob.base.util.CamelCaseMap;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -58,5 +55,10 @@ public class ProjectServiceImpl implements ProjectService {
         boolean successNotification = notificationMapper.insertNotification(notification) > 0;
 
         return successRequest;
+    }
+
+    @Override
+    public void insertProjectMember(int projectId, int userId, String jobTitle) {
+        projectMapper.insertMember(projectId, userId, jobTitle);
     }
 }

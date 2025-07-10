@@ -13,7 +13,7 @@ import java.util.Map;
 @RequestMapping(value = "/projects")
 public class ProjectController {
 
-    private ProjectService projectService;
+    private final ProjectService projectService;
 
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
@@ -36,9 +36,9 @@ public class ProjectController {
      *
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping("/{projectId}")
     @ResponseBody
-    public ApiResponse<CamelCaseMap> findProjectDetail(@PathVariable("id") int projectId) {
+    public ApiResponse<CamelCaseMap> findProjectDetail(@PathVariable("projectId") int projectId) {
         Map<String, Object> result = new HashMap<>();
         CamelCaseMap data = projectService.findProjectDetail(projectId);
 
@@ -58,7 +58,7 @@ public class ProjectController {
             @PathVariable("projectId") int projectId,
             @RequestBody Map<String, Object> body
     ) {
-        int userId = (int) body.get("user_id");
+        int userId = (int) body.get("userId");
         boolean success = projectService.applyProject(projectId, userId);
         return ApiResponse.ok(null);
     }

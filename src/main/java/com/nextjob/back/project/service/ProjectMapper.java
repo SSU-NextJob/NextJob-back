@@ -1,12 +1,8 @@
 package com.nextjob.back.project.service;
 
 import com.nextjob.back.project.domain.Project;
-import com.nextjob.back.project.web.ProjectSearchCriteria;
 import com.nextjob.base.util.CamelCaseMap;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Mapper
 public interface ProjectMapper {
@@ -19,5 +15,5 @@ public interface ProjectMapper {
     /* 프로젝트 지원 */
     int insertApplyRequest(int projectId, int userId, String requestType, String requestStatus);
     /* 프로젝트 멤버 추가 */
-    int insertMember(int projectId, int userId, String jobTitle);
+    void insertMember(int projectId, int userId, String jobTitle);
 }

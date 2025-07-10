@@ -1,6 +1,6 @@
 package com.nextjob.back.post.web;
 
-import com.nextjob.back.project.web.ProjectInfo;
+import com.nextjob.back.project.web.ProjectListResponse;
 import com.nextjob.base.web.servlet.search.Search;
 
 import java.util.Date;
@@ -13,7 +13,7 @@ public class PostListResponse implements Search {
     private Date createDate;
     private int userId;
     private String userName;
-    private ProjectInfo project;
+    private ProjectListResponse project;
 
     public int getPostId() {
         return postId;
@@ -63,11 +63,11 @@ public class PostListResponse implements Search {
         this.userName = userName;
     }
 
-    public ProjectInfo getProject() {
+    public ProjectListResponse getProject() {
         return project;
     }
 
-    public void setProject(ProjectInfo project) {
+    public void setProject(ProjectListResponse project) {
         this.project = project;
     }
 }

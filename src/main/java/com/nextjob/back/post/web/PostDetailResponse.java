@@ -1,6 +1,5 @@
 package com.nextjob.back.post.web;
 
-import com.nextjob.back.project.web.ProjectInfo;
 import com.nextjob.base.web.servlet.search.Search;
 
 import java.util.Date;

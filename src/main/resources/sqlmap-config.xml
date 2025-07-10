@@ -12,6 +12,6 @@
     </typeAliases>
 
 <!--    <mappers>-->
-<!--        <mapper resource="sqlmap/user/UserMapper.xml"/>-->
+<!--        <mapper resource="sqlmap/user/RequestMapper.xml"/>-->
 <!--    </mappers>-->
 </configuration>

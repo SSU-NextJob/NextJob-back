@@ -4,7 +4,6 @@ import com.nextjob.back.project.domain.Project;
 import com.nextjob.back.project.web.ProjectSearchCriteria;
 import com.nextjob.base.util.CamelCaseMap;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -18,6 +17,8 @@ public interface ProjectMapper {
     int findProjectCreatorId(int projectId);
     /* 프로젝트 지원 */
     int insertApplyRequest(int projectId, int userId, String requestType, String requestStatus);
+    /* 프로젝트 멤버 추가 */
+    int insertMember(int projectId, int userId, String jobTitle);
     /* 생성한 프로젝트 조회 */
     List<CamelCaseMap> findCreateProjectList(ProjectSearchCriteria projectSearchCriteria);
     /* 참여한 프로젝트 조회 */

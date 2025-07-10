@@ -24,7 +24,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public int insertProject(Project project) {
-        return projectMapper.insertProject(project);
+        // 1. 프로젝트 생성
+        int count =  projectMapper.insertProject(project);
+
+        // 2. 멤버에 팀장을 추가
+        projectMapper.insertMember(project.getProjectId(), project.getCreatorId(), "LEADER");
+
+        return count;
     }
 
     @Override

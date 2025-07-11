@@ -92,14 +92,9 @@ public class RequestController {
         if (status.equals("ACCEPTED")) {
             int projectId = request.getInt("projectId");
             int userId = request.getInt("userId");
-            String requestType = request.getString("requestType");
             String jobTitle = "MEMBER";
 
-            if (requestType.equals("APPLY")) {
-                projectService.insertProjectMember(projectId, userId, jobTitle);
-            } else if (requestType.equals("SUGGEST")) {
-                projectService.insertProjectMember(projectId, userId, jobTitle);
-            }
+            projectService.insertProjectMember(projectId, userId, jobTitle);
         }
 
         return ApiResponse.ok(null);

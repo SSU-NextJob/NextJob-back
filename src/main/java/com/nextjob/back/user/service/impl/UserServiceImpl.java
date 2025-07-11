@@ -3,6 +3,7 @@ package com.nextjob.back.user.service.impl;
 import com.nextjob.back.notification.domain.Notification;
 import com.nextjob.back.user.service.UserMapper;
 import com.nextjob.back.user.service.UserService;
+import com.nextjob.back.user.web.UserSearchCriteria;
 import com.nextjob.base.util.CamelCaseMap;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<CamelCaseMap> findUserList(String userType, String search) {
-        return userMapper.findUserList(userType, search);
+    public List<CamelCaseMap> findUserList(UserSearchCriteria userSearchCriteria) {
+        return userMapper.findUserList(userSearchCriteria);
     }
 
     @Override

@@ -35,8 +35,18 @@ public class UserController {
      * @return 사용자 개발 분야와 검색어 조건에 해당하는 사용자 목록을 반환
      */
     @GetMapping
-    public ApiResponse<List<CamelCaseMap>> findUserList(@RequestParam(required = false) String userType, @RequestParam(required = false) String search) {
-        List<CamelCaseMap> userList = userService.findUserList(userType, search);
+    public ApiResponse<List<CamelCaseMap>> findUserList(
+            @RequestParam(required = false) String userType,
+            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        UserSearchCriteria userSearchCriteria = new UserSearchCriteria();
+        userSearchCriteria.setUserType(userType);
+        userSearchCriteria.setSearch(search);
+        userSearchCriteria.setOffset((page - 1) * pageSize);
+        userSearchCriteria.setLimit(pageSize);
+
+        List<CamelCaseMap> userList = userService.findUserList(userSearchCriteria);
         if(ObjectUtils.isEmpty(userList)) {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }

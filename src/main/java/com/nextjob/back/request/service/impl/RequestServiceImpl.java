@@ -16,6 +16,12 @@ public class RequestServiceImpl implements RequestService {
         this.requestMapper = requestMapper;
     }
 
+    /* 요청 상세 조회 */
+    @Override
+    public CamelCaseMap findRequestDetail(int requestId) {
+        return requestMapper.findRequestDetail(requestId);
+    }
+
     /* 사용자에게 온 요청 목록 조회 (프로젝트 지원) */
     @Override
     public List<CamelCaseMap> findIncomingApplyList(int userId) {
@@ -48,6 +54,12 @@ public class RequestServiceImpl implements RequestService {
         String jobTitle = "LEADER";
 
         return requestMapper.findOutgoingSuggestList(userId, requestType, jobTitle);
+    }
+
+    /* 요청 상태 변경 */
+    @Override
+    public void updateRequestStatus(int requestId, String status) {
+        requestMapper.updateRequestStatus(requestId, status);
     }
 }
 

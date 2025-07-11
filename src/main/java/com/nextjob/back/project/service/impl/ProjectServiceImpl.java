@@ -66,6 +66,11 @@ public class ProjectServiceImpl implements ProjectService {
         return successRequest;
     }
 
+    @Override
+    public void insertProjectMember(int projectId, int userId, String jobTitle) {
+        projectMapper.insertMember(projectId, userId, jobTitle);
+    }
+
     /**
      * 생성한 프로젝트 조회
      *

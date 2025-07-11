@@ -29,6 +29,7 @@ public class PostController {
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String role,
             @RequestParam(required = false) String search,
+            @RequestParam(required = false) Integer userId,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int pageSize
     ) {
@@ -36,6 +37,7 @@ public class PostController {
         param.put("type", type);
         param.put("role", role);
         param.put("search", search);
+        param.put("userId", userId);
         param.put("offset", (page - 1) * pageSize);
         param.put("limit", pageSize);
 

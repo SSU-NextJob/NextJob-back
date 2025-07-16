@@ -9,6 +9,7 @@ import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,13 +84,13 @@ public class ProjectController {
         // 생성한 프로젝트 조회
         List<CamelCaseMap> createProjectList = projectService.findCreateProjectList(projectSearchCriteria);
         if(ObjectUtils.isEmpty(createProjectList)) {
-            throw new CustomException(ErrorCode.NOT_FOUND);
+            createProjectList = new ArrayList<>();
         }
 
         // 참여한 프로젝트 조회
         List<CamelCaseMap> participationProjectList = projectService.findParticipationProjectList(projectSearchCriteria);
         if(ObjectUtils.isEmpty(participationProjectList)) {
-            throw new CustomException(ErrorCode.NOT_FOUND);
+            participationProjectList = new ArrayList<>();
         }
         result.put("createdProject", createProjectList);
         result.put("participationProject", participationProjectList);

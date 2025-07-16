@@ -32,7 +32,7 @@
             p.user_name,
             pr.project_id,
             pr.name AS project_name,
-            pr.type AS project_type,
+            GetDetailCodeName('PROJECT_TYPE', pr.type) AS project_type,
             pr.start_at,
             pr.end_at,
             pr.image
@@ -68,7 +68,7 @@
             pr.project_id,
             pr.name AS project_name,
             pr.content AS project_content,
-            pr.type AS project_type,
+            GetDetailCodeName('PROJECT_TYPE', pr.type) AS project_type,
             pr.start_at,
             pr.end_at,
             pr.image

@@ -67,7 +67,7 @@
         SELECT project_id
              , name
              , content
-             , type
+             , GetDetailCodeName('PROJECT_TYPE', type) AS type
              , start_at
              , end_at
          FROM projects
@@ -81,7 +81,7 @@
         SELECT proj.project_id
              , proj.name
              , proj.content
-             , proj.type
+             , GetDetailCodeName('PROJECT_TYPE', proj.type) AS type
              , proj.start_at
              , proj.end_at
          FROM projects proj

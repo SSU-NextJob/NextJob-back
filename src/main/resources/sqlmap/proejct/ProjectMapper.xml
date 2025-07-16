@@ -17,9 +17,9 @@
             content,
             start_at,
             end_at,
-            GetDetailCodeName('PROJECT_TYPE', project_type) AS project_type,
+            GetDetailCodeName('PROJECT_STATUS', project_type) AS project_type,
             image,
-            type
+            GetDetailCodeName('PROJECT_TYPE', type) AS type
         FROM projects
         WHERE project_id = #{projectId}
     </select>

@@ -17,7 +17,7 @@ public interface UserService {
     boolean suggestToUser(int userId, int projectId);
 
     /* 사용자 정보 수정 */
-    void updateUser(int userId, String name, String techStack, String description);
+    void updateUser(int userId, String name, String techStack, String description, String userType);
 
     /* 사용자 노출 여부 수정 */
     void updateUserVisibility(int userId, Boolean isVisible);

@@ -28,7 +28,8 @@ public interface UserMapper {
             @Param("userId") int userId,
             @Param("name") String name,
             @Param("techStack") String techStack,
-            @Param("description") String description
+            @Param("description") String description,
+            @Param("userType") String userType
     );
 
     /* 사용자 노출 여부 수정 */

@@ -80,14 +80,14 @@ public class UserController {
         String name = body.get("name").toString();
         String techStack = body.get("techStack").toString();
         String description = body.get("description").toString();
+        String userType = body.get("userType").toString();
 
         CamelCaseMap user = userService.findUserDetail(userId);
-        System.out.println(user);
         if (ObjectUtils.isEmpty(user)) {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 
-        userService.updateUser(userId, name, techStack, description);
+        userService.updateUser(userId, name, techStack, description, userType);
 
         return ApiResponse.ok(null);
     }

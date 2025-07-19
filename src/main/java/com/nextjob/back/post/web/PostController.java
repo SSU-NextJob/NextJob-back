@@ -37,7 +37,7 @@ public class PostController {
         param.put("type", type);
         param.put("role", role);
         param.put("search", search);
-        param.put("userId", userId);
+        param.put("user_id", userId);
         param.put("offset", (page - 1) * pageSize);
         param.put("limit", pageSize);
 

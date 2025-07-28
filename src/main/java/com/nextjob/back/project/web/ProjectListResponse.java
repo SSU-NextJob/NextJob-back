@@ -9,7 +9,7 @@ public class ProjectListResponse {
     private int projectId;
     private String name;
     private String content;
-    private String projectType;
+    private String type;
     private LocalDateTime startAt;
     private LocalDateTime endAt;
     private String image;

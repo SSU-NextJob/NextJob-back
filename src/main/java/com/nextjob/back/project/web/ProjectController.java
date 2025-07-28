@@ -97,4 +97,16 @@ public class ProjectController {
 
         return ApiResponse.ok(result);
     }
+
+    /**
+     * 프로젝트 참여 인원 조회
+     *
+     * @param projectId
+     * @return
+     */
+    @GetMapping("/{projectId}/members")
+    public ApiResponse<List<CamelCaseMap>> findProjectMemberList(@PathVariable("projectId") int projectId) {
+        List<CamelCaseMap> data = projectService.findProjectMemberList(projectId);
+        return ApiResponse.ok(data);
+    }
 }

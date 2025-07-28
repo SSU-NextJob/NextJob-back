@@ -20,4 +20,7 @@ public interface ProjectService {
 
     /* 내가 참여한 프로젝트 조회 */
     List<CamelCaseMap> findParticipationProjectList(ProjectSearchCriteria projectSearchCriteria);
+
+    /* 프로젝트 참여 인원 조회 */
+    List<CamelCaseMap> findProjectMemberList(int projectId);
 }

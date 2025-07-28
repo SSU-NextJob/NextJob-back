@@ -25,4 +25,6 @@ public interface ProjectMapper {
     List<CamelCaseMap> findCreateProjectList(ProjectSearchCriteria projectSearchCriteria);
     /* 참여한 프로젝트 조회 */
     List<CamelCaseMap> findParticipationProjectList(ProjectSearchCriteria projectSearchCriteria);
+    /* 프로젝트 참여인원 조회 */
+    List<CamelCaseMap> findProjectMemberList(int projectId);
 }

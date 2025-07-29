@@ -107,6 +107,10 @@ public class ProjectController {
     @GetMapping("/{projectId}/members")
     public ApiResponse<List<CamelCaseMap>> findProjectMemberList(@PathVariable("projectId") int projectId) {
         List<CamelCaseMap> data = projectService.findProjectMemberList(projectId);
+        if(ObjectUtils.isEmpty(data)) {
+            throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
         return ApiResponse.ok(data);
     }
 }

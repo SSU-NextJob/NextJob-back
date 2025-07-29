@@ -111,4 +111,20 @@ public class ProjectController {
         }
         return ApiResponse.ok(applicantList);
     }
+
+    /**
+     * 프로젝트 참여 인원 조회
+     *
+     * @param projectId
+     * @return
+     */
+    @GetMapping("/{projectId}/members")
+    public ApiResponse<List<CamelCaseMap>> findProjectMemberList(@PathVariable("projectId") int projectId) {
+        List<CamelCaseMap> data = projectService.findProjectMemberList(projectId);
+        if(ObjectUtils.isEmpty(data)) {
+            throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        return ApiResponse.ok(data);
+    }
 }

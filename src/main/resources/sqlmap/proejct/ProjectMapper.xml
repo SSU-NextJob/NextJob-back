@@ -107,4 +107,21 @@
         LEFT JOIN users u on r.user_id = u.user_id
         where r.project_id = 1 and r.request_type = 'APPLY'
     </select>
+
+    <!-- 프로젝트 참여 인원 조회 -->
+    <select id="findProjectMemberList" resultType="CamelCaseMap">
+        /* ProjectMapper.findProjectMemberList */
+        SELECT proj_mem.project_id      /* 프로젝트아이디 */
+             , users.name               /* 이름 */
+             , proj_mem.job_title       /* 리더 or 맴버 */
+             , users.description        /* 한줄소개 */
+             , users.profile_image      /* 프로필 이미지 */
+             , GetDetailCodeName('USER_TYPE', users.user_type) AS user_type /* 역할(백엔드 등) */
+             , users.tech_stack         /* 기술스택 */
+          FROM project_members proj_mem
+     LEFT JOIN users
+            ON proj_mem.user_id = users.user_id
+         WHERE 1=1
+           AND proj_mem.project_id = #{projectId}
+    </select>
 </mapper>

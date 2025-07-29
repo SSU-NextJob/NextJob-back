@@ -104,4 +104,15 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectUserResponse> findProjectApplyMemberList(int projectId) {
         return projectMapper.selectApplyMemberList(projectId);
     }
+
+    /**
+     * 프로젝트 참여인원 조회
+     *
+     * @param projectId
+     * @return
+     */
+    @Override
+    public List<CamelCaseMap> findProjectMemberList(int projectId) {
+        return projectMapper.findProjectMemberList(projectId);
+    }
 }

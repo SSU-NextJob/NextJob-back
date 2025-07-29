@@ -28,4 +28,6 @@ public interface ProjectMapper {
     List<CamelCaseMap> findParticipationProjectList(ProjectSearchCriteria projectSearchCriteria);
     /* 프로젝트 지원한 사용자 목록 조회 */
     List<ProjectUserResponse> selectApplyMemberList(int projectId);
+    /* 프로젝트 참여인원 조회 */
+    List<CamelCaseMap> findProjectMemberList(int projectId);
 }

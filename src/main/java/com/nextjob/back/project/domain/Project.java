@@ -1,7 +1,6 @@
 package com.nextjob.back.project.domain;
 
 import com.nextjob.base.domain.Domain;
-import lombok.Getter;
 
 import java.util.Date;
 
@@ -22,7 +21,7 @@ public class Project extends Domain {
     private Date endAt;
 
     /* 프로젝트 진행 상태 */
-    private String projectType;
+    private String status;
 
     /* 프로젝트 이미지 */
     private String image;
@@ -70,12 +69,12 @@ public class Project extends Domain {
         this.endAt = endAt;
     }
 
-    public String getProjectType() {
-        return projectType;
+    public String getStatus() {
+        return status;
     }
 
-    public void setProjectType(String projectType) {
-        this.projectType = projectType;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getImage() {

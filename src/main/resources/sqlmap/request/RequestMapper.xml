@@ -10,7 +10,7 @@
         <id property="projectId" column="project_id"/>
         <result property="name" column="project_name"/>
         <result property="content" column="content"/>
-        <result property="projectType" column="project_type"/>
+        <result property="status" column="status"/>
         <result property="startAt" column="start_at"/>
         <result property="endAt" column="end_at"/>
         <result property="image" column="image"/>
@@ -32,7 +32,7 @@
             p.project_id,
             p.name,
             p.content,
-            p.project_type,
+            p.status,
             p.start_at,
             p.end_at,
             p.image
@@ -54,7 +54,7 @@
             p.project_id,
             p.name,
             p.content,
-            p.project_type,
+            p.status,
             p.start_at,
             p.end_at,
             p.image
@@ -73,7 +73,7 @@
             p.project_id,
             p.name,
             p.content,
-            p.project_type,
+            p.status,
             p.start_at,
             p.end_at,
             p.image
@@ -92,7 +92,7 @@
             p.project_id,
             p.name,
             p.content,
-            p.project_type,
+            p.status,
             p.start_at,
             p.end_at,
             p.image

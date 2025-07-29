@@ -4,9 +4,9 @@
 
     <insert id="insertProject" parameterType="com.nextjob.back.project.domain.Project" useGeneratedKeys="true" keyProperty="projectId">
         INSERT INTO nextjob_db.projects
-            (name, content, user_id, start_at, end_at, project_type, create_date, image, type)
+            (name, content, user_id, start_at, end_at, status, create_date, image, type)
         VALUES
-            (#{name}, #{content}, #{creatorId}, #{startAt}, #{endAt}, #{projectType}, CURRENT_TIMESTAMP, #{image}, #{type});
+            (#{name}, #{content}, #{creatorId}, #{startAt}, #{endAt}, #{status}, CURRENT_TIMESTAMP, #{image}, #{type});
     </insert>
 
     <!-- 프로젝트 상세 조회 -->
@@ -17,7 +17,7 @@
             content,
             start_at,
             end_at,
-            GetDetailCodeName('PROJECT_STATUS', project_type) AS project_type,
+            GetDetailCodeName('PROJECT_STATUS', status) AS status,
             image,
             GetDetailCodeName('PROJECT_TYPE', type) AS type
         FROM projects

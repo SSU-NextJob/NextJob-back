@@ -21,6 +21,9 @@ public interface ProjectService {
     /* 내가 참여한 프로젝트 조회 */
     List<CamelCaseMap> findParticipationProjectList(ProjectSearchCriteria projectSearchCriteria);
 
+    /* 프로젝트 지원한 사용자 목록 조회 */
+    List<ProjectUserResponse> findProjectApplyMemberList(int projectId);
+
     /* 프로젝트 참여 인원 조회 */
     List<CamelCaseMap> findProjectMemberList(int projectId);
 }

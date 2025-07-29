@@ -2,6 +2,7 @@ package com.nextjob.back.project.service;
 
 import com.nextjob.back.project.domain.Project;
 import com.nextjob.back.project.web.ProjectSearchCriteria;
+import com.nextjob.back.project.web.ProjectUserResponse;
 import com.nextjob.base.util.CamelCaseMap;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,6 +26,8 @@ public interface ProjectMapper {
     List<CamelCaseMap> findCreateProjectList(ProjectSearchCriteria projectSearchCriteria);
     /* 참여한 프로젝트 조회 */
     List<CamelCaseMap> findParticipationProjectList(ProjectSearchCriteria projectSearchCriteria);
+    /* 프로젝트 지원한 사용자 목록 조회 */
+    List<ProjectUserResponse> selectApplyMemberList(int projectId);
     /* 프로젝트 참여인원 조회 */
     List<CamelCaseMap> findProjectMemberList(int projectId);
 }

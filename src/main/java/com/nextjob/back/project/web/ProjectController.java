@@ -99,6 +99,20 @@ public class ProjectController {
     }
 
     /**
+     * 프로젝트 지원 유저 목록 조회
+     *
+     * @return
+     */
+    @GetMapping("/{projectId}/applyMembers")
+    public ApiResponse<List<ProjectUserResponse>> findProjectApplyMemberList(@PathVariable int projectId) {
+        List<ProjectUserResponse> applicantList = projectService.findProjectApplyMemberList(projectId);
+        if (ObjectUtils.isEmpty(applicantList)) {
+            applicantList = new ArrayList<>();
+        }
+        return ApiResponse.ok(applicantList);
+    }
+
+    /**
      * 프로젝트 참여 인원 조회
      *
      * @param projectId

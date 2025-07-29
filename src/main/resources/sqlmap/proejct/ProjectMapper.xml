@@ -92,6 +92,22 @@
           AND proj_mem.job_title = 'MEMBER'
     </select>
 
+    <!-- 프로젝트 지원한 사용자 목록 조회 -->
+    <select id="selectApplyMemberList" resultType="com.nextjob.back.project.web.ProjectUserResponse">
+        SELECT
+            r.project_id,
+            r.user_id,
+            u.name,
+            u.description,
+            u.profile_image,
+            u.user_type,
+            u.tech_stack,
+            GetDetailCodeName('REQUEST_STATUS', r.request_status) AS request_status
+        FROM requests r
+        LEFT JOIN users u on r.user_id = u.user_id
+        where r.project_id = 1 and r.request_type = 'APPLY'
+    </select>
+
     <!-- 프로젝트 참여 인원 조회 -->
     <select id="findProjectMemberList" resultType="CamelCaseMap">
         /* ProjectMapper.findProjectMemberList */

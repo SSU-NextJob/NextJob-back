@@ -34,7 +34,7 @@ jobs:
 
     # Docker 이미지 Build
     - name: Docker Image Build
-      run: docker build -t juhyun5060/nextjob-api
+      run: docker buildx build --platform linux/amd64 -t juhyun5060/nextjob-api
 
     # Docker Hub Login
     - name: Docker Login

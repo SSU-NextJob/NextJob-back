@@ -6,6 +6,7 @@ import com.nextjob.back.project.domain.Project;
 import com.nextjob.back.project.service.ProjectMapper;
 import com.nextjob.back.project.service.ProjectService;
 import com.nextjob.back.project.web.ProjectSearchCriteria;
+import com.nextjob.back.project.web.ProjectUserResponse;
 import com.nextjob.base.util.CamelCaseMap;
 import org.springframework.stereotype.Service;
 
@@ -91,5 +92,16 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<CamelCaseMap> findParticipationProjectList(ProjectSearchCriteria projectSearchCriteria) {
         return projectMapper.findParticipationProjectList(projectSearchCriteria);
+    }
+
+    /**
+     * 프로젝트 지원한 사용자 목록 조회
+     *
+     * @param projectId
+     * @return List<ProjectUserResponse>
+     */
+    @Override
+    public List<ProjectUserResponse> findProjectApplyMemberList(int projectId) {
+        return projectMapper.selectApplyMemberList(projectId);
     }
 }

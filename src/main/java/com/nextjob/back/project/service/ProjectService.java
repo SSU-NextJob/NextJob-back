@@ -2,6 +2,7 @@ package com.nextjob.back.project.service;
 
 import com.nextjob.back.project.domain.Project;
 import com.nextjob.back.project.web.ProjectSearchCriteria;
+import com.nextjob.back.project.web.ProjectUserResponse;
 import com.nextjob.base.util.CamelCaseMap;
 
 import java.util.List;

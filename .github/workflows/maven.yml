@@ -75,7 +75,7 @@ jobs:
         script: |
           sudo docker stop nextjob-api
           sudo docker rm nextjob-api
-          sudo docker run --name nextjob-api --restart unless-stopped --env-file ./NextJob-back/.env -it -d -p 8080:8080 juhyun5060/nextjob-api      
+          sudo docker run --name nextjob-api --restart unless-stopped --env-file ./NextJob-back/.env -it -d -p 8080:8080 juhyun5060/nextjob-api
 
     # Remove GitHub IP from Security Group
     - name: Remove GitHub IP from Security Group

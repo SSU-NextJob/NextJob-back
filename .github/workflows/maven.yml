@@ -46,3 +46,40 @@ jobs:
     # Docker Hub Push
     - name: Docker Hub Push
       run: docker push juhyun5060/nextjob-api
+
+    # Get GitHub IP
+    - name: Get GitHub IP
+      id: ip
+      uses: haythem/public-ip@v1.2
+
+    # AWS 접근 권한 취득(IAM)
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4.1.0
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2
+
+    # Add GitHub IP to AWS
+    - name: Add GitHub IP to AWS
+      run: |
+        aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+    # AWS EC2 Server Connect & Docker 명령어 실행
+    - name: AWS EC2 Connection
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.EC2_SSH_PORT }}
+        timeout: '60s'
+        script: |
+          sudo docker stop nextjob-api
+          sudo docker rm nextjob-api
+          sudo docker run -it -d -p 8080:8080 --name nextjob-api juhyun5060/nextjob-api
+
+    # Remove GitHub IP from Security Group
+    - name: Remove GitHub IP from Security Group
+      run: |
+        aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32

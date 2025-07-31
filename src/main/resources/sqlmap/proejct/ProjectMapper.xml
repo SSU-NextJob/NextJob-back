@@ -38,12 +38,14 @@
             project_id,
             user_id,
             request_type,
-            request_status
+            request_status,
+            post_id
         ) VALUES (
              #{projectId},
              #{userId},
              #{requestType},
-             #{requestStatus}
+             #{requestStatus},
+             #{postId}
          )
     </insert>
 
@@ -97,6 +99,7 @@
         SELECT
             r.project_id,
             r.user_id,
+            r.post_id,
             u.name,
             u.description,
             u.profile_image,
@@ -105,7 +108,7 @@
             GetDetailCodeName('REQUEST_STATUS', r.request_status) AS request_status
         FROM requests r
         LEFT JOIN users u on r.user_id = u.user_id
-        where r.project_id = 1 and r.request_type = 'APPLY'
+        where r.project_id = #{projectId} and r.request_type = 'APPLY'
     </select>
 
     <!-- 프로젝트 참여 인원 조회 -->

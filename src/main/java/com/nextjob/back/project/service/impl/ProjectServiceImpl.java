@@ -40,7 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public boolean applyProject(int projectId, int userId) {
+    public boolean applyProject(int projectId, int userId, int postId) {
         String requestType = "APPLY";       // 요청 종류 : 지원
         String requestStatus = "PENDING";   // 요청 상태 : 대기
 
@@ -51,7 +51,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         // 1. 요청 등록
-        boolean successRequest = projectMapper.insertApplyRequest(projectId, userId, requestType, requestStatus) > 0;
+        boolean successRequest = projectMapper.insertApplyRequest(projectId, userId, postId, requestType, requestStatus) > 0;
 
         // 2. 프로젝트 팀장 조회
         int creatorId = projectMapper.findProjectCreatorId(projectId);

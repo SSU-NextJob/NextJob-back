@@ -7,6 +7,7 @@ import lombok.Getter;
 public class ProjectUserResponse implements Search {
     private int projectId;
     private int userId;
+    private int postId;
     private String name;
     private String description;
     private String techStack;

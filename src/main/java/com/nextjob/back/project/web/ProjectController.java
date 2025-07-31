@@ -64,7 +64,8 @@ public class ProjectController {
             @RequestBody Map<String, Object> body
     ) {
         int userId = (int) body.get("userId");
-        boolean success = projectService.applyProject(projectId, userId);
+        int postId = (int) body.get("postId");
+        boolean success = projectService.applyProject(projectId, userId, postId);
         if (success) {
             return ApiResponse.ok(null);
         } else {

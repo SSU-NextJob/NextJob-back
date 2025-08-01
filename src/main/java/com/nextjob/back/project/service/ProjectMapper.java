@@ -30,4 +30,6 @@ public interface ProjectMapper {
     List<ProjectUserResponse> selectApplyMemberList(int projectId);
     /* 프로젝트 참여인원 조회 */
     List<CamelCaseMap> findProjectMemberList(int projectId);
+    /* 게시글 지원 중복 확인 */
+    int findPostApplyMember(int userId, int postId);
 }

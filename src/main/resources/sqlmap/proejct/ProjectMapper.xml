@@ -127,4 +127,12 @@
          WHERE 1=1
            AND proj_mem.project_id = #{projectId}
     </select>
+
+    <select id="findPostApplyMember" resultType="int">
+        /* ProjectMapper.findPostApplyMember */
+        SELECT COUNT(*)
+          FROM requests
+         WHERE user_id = #{userId}
+           AND post_id = #{postId}
+    </select>
 </mapper>

@@ -44,12 +44,11 @@ public class ProjectController {
     @GetMapping("/{projectId}")
     @ResponseBody
     public ApiResponse<CamelCaseMap> findProjectDetail(@PathVariable("projectId") int projectId) {
-        Map<String, Object> result = new HashMap<>();
         CamelCaseMap data = projectService.findProjectDetail(projectId);
 
-        result.put("success", data != null);
-        result.put("data", data);
-
+        if (data == null) {
+            throw new CustomException(ErrorCode.PROJECT_NOT_FOUND);
+        }
         return ApiResponse.ok(data);
     }
 

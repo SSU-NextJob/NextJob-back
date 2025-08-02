@@ -55,7 +55,7 @@ public class ProjectServiceImpl implements ProjectService {
         // 0. 이미 참여 중인 프로젝트인지 확인
         int checkMemer = projectMapper.selectMemberByUserId(projectId, userId);
         if(checkMemer > 0) {
-            return false;
+            throw new CustomException(ErrorCode.CONFLICT_PROJECT);
         }
 
         // 1. 요청 등록

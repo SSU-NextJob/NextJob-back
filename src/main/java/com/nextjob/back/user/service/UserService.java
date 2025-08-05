@@ -21,4 +21,10 @@ public interface UserService {
 
     /* 사용자 노출 여부 수정 */
     void updateUserVisibility(int userId, Boolean isVisible);
+
+    /* 사용자 생성 */
+    void createUser(String name, String email);
+
+    /* 사용자 조회 (구글) */
+    CamelCaseMap findUserDetailByEmail(String email);
 }

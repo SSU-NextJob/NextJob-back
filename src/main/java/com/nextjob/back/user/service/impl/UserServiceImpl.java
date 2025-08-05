@@ -71,5 +71,15 @@ public class UserServiceImpl implements UserService {
     public void updateUserVisibility(int userId, Boolean isVisible) {
         userMapper.updateUserVisibility(userId, isVisible);
     }
+
+    @Override
+    public void createUser(String name, String email) {
+        userMapper.createUser(name, email);
+    }
+
+    @Override
+    public CamelCaseMap findUserDetailByEmail(String email) {
+        return userMapper.findUserDetailByEmail(email);
+    }
 }
 

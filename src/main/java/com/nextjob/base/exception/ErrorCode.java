@@ -11,7 +11,7 @@ public enum ErrorCode {
     POST_NOT_FOUND(40403, HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."),
     CONFLICT(40900, HttpStatus.CONFLICT, "중복된 요청입니다."),
     CONFLICT_APPLY(40901, HttpStatus.CONFLICT, "이미 지원한 게시글입니다."),
-    CONFLICT_PROJECT(40901, HttpStatus.CONFLICT, "이미 참여 중인 프로젝트입니다.");
+    CONFLICT_PROJECT(40902, HttpStatus.CONFLICT, "이미 참여 중인 프로젝트입니다.");
 
     private final Integer code;
     private final HttpStatus httpStatus;

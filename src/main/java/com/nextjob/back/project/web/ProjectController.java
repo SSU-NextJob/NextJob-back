@@ -44,12 +44,11 @@ public class ProjectController {
     @GetMapping("/{projectId}")
     @ResponseBody
     public ApiResponse<CamelCaseMap> findProjectDetail(@PathVariable("projectId") int projectId) {
-        Map<String, Object> result = new HashMap<>();
         CamelCaseMap data = projectService.findProjectDetail(projectId);
 
-        result.put("success", data != null);
-        result.put("data", data);
-
+        if (data == null) {
+            throw new CustomException(ErrorCode.PROJECT_NOT_FOUND);
+        }
         return ApiResponse.ok(data);
     }
 
@@ -64,7 +63,8 @@ public class ProjectController {
             @RequestBody Map<String, Object> body
     ) {
         int userId = (int) body.get("userId");
-        boolean success = projectService.applyProject(projectId, userId);
+        int postId = (int) body.get("postId");
+        boolean success = projectService.applyProject(projectId, userId, postId);
         if (success) {
             return ApiResponse.ok(null);
         } else {

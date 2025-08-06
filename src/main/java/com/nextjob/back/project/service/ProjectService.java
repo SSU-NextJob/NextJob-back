@@ -12,7 +12,7 @@ public interface ProjectService {
 
     CamelCaseMap findProjectDetail(int projectId);
 
-    boolean applyProject(int projectId, int userId);
+    boolean applyProject(int projectId, int userId, int postId);
 
     void insertProjectMember(int projectId, int userId, String jobTitle);
 

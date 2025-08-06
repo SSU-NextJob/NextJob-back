@@ -7,6 +7,8 @@ import com.nextjob.back.project.service.ProjectMapper;
 import com.nextjob.back.project.service.ProjectService;
 import com.nextjob.back.project.web.ProjectSearchCriteria;
 import com.nextjob.back.project.web.ProjectUserResponse;
+import com.nextjob.base.exception.CustomException;
+import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import org.springframework.stereotype.Service;
 
@@ -40,18 +42,24 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public boolean applyProject(int projectId, int userId) {
+    public boolean applyProject(int projectId, int userId, int postId) {
         String requestType = "APPLY";       // 요청 종류 : 지원
         String requestStatus = "PENDING";   // 요청 상태 : 대기
 
-        // 0. 기존 요청이 있는지 확인
+        // 같은 게시글 중복 지원인지 확인
+        int checkApply = projectMapper.findPostApplyMember(userId, postId);
+        if (checkApply > 0) {
+            throw new CustomException(ErrorCode.CONFLICT_APPLY);
+        }
+
+        // 0. 이미 참여 중인 프로젝트인지 확인
         int checkMemer = projectMapper.selectMemberByUserId(projectId, userId);
         if(checkMemer > 0) {
-            return false;
+            throw new CustomException(ErrorCode.CONFLICT_PROJECT);
         }
 
         // 1. 요청 등록
-        boolean successRequest = projectMapper.insertApplyRequest(projectId, userId, requestType, requestStatus) > 0;
+        boolean successRequest = projectMapper.insertApplyRequest(projectId, userId, postId, requestType, requestStatus) > 0;
 
         // 2. 프로젝트 팀장 조회
         int creatorId = projectMapper.findProjectCreatorId(projectId);

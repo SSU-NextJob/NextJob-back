@@ -49,7 +49,7 @@ public class PostController {
     public ApiResponse<PostDetailResponse> findPostDetail(@PathVariable("id") int postId) {
         PostDetailResponse post = postService.findPostDetail(postId);
         if (post == null) {
-            throw new CustomException(ErrorCode.NOT_FOUND);
+            throw new CustomException(ErrorCode.POST_NOT_FOUND);
         }
         return ApiResponse.ok(post);
     }
@@ -80,7 +80,7 @@ public class PostController {
         post.setPostId(postId);
         int count = postService.updatePost(post);
         if (count == 0) {
-            throw new CustomException(ErrorCode.NOT_FOUND);
+            throw new CustomException(ErrorCode.POST_NOT_FOUND);
         }
         return ApiResponse.ok(null);
     }
@@ -95,7 +95,7 @@ public class PostController {
     public ApiResponse<Void> deletePost(@PathVariable("id") int postId) {
         int count = postService.deletePost(postId);
         if (count == 0) {
-            throw new CustomException(ErrorCode.NOT_FOUND);
+            throw new CustomException(ErrorCode.POST_NOT_FOUND);
         }
         return ApiResponse.ok(null);
     }

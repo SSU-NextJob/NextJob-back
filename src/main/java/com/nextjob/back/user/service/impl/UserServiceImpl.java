@@ -81,5 +81,10 @@ public class UserServiceImpl implements UserService {
     public CamelCaseMap findUserDetailByEmail(String email) {
         return userMapper.findUserDetailByEmail(email);
     }
+
+    @Override
+    public void updateUserAccessToken(int userId, String accessToken) {
+        userMapper.updateUserAccessToken(userId, accessToken);
+    }
 }
 

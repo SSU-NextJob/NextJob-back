@@ -40,4 +40,7 @@ public interface UserMapper {
 
     /* 사용자 생성 (회원가입) */
     void createUser(@Param("name") String name, @Param("email") String email);
+
+    /* 액세스 토큰 저장 */
+    void updateUserAccessToken(@Param("userId") int userId, @Param("accessToken") String accessToken);
 }

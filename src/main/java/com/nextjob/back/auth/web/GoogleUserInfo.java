@@ -1,4 +1,3 @@
-// GoogleUserInfo.java - 사용자 정보 응답 DTO
 package com.nextjob.back.auth.web;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

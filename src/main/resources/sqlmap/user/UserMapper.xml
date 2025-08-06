@@ -117,4 +117,10 @@
            #{name}, #{email}, FALSE, NOW()
         )
     </insert>
+
+    <update id="updateUserAccessToken">
+        UPDATE users
+        SET access_token = #{accessToken}
+        WHERE user_id = #{userId}
+    </update>
 </mapper>

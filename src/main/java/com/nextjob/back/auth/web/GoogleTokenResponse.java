@@ -1,4 +1,3 @@
-// GoogleTokenResponse.java - 액세스 토큰 응답 DTO
 package com.nextjob.back.auth.web;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

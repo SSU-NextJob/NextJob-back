@@ -27,4 +27,7 @@ public interface UserService {
 
     /* 사용자 조회 (구글) */
     CamelCaseMap findUserDetailByEmail(String email);
+
+    /* 액세스 토큰 저장 */
+    void updateUserAccessToken(int userId, String accessToken);
 }

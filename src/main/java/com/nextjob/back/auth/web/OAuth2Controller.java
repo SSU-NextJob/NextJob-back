@@ -2,6 +2,8 @@ package com.nextjob.back.auth.web;
 
 import com.nextjob.back.auth.service.OAuth2Service;
 import com.nextjob.back.user.service.UserService;
+import com.nextjob.base.exception.CustomException;
+import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.web.bind.annotation.*;
@@ -26,21 +28,28 @@ public class OAuth2Controller {
      */
     @GetMapping("/google/callback")
     public ApiResponse<CamelCaseMap> googleLogin(@RequestParam("code") String code) {
-        System.out.println("[0] 인가코드: " + code);
-        // 인가코드로 유저 정보 반환
-        GoogleUserInfo userInfo = oauth2Service.getGoogleUserInfo(code);
-        System.out.println("[2] 사용자 정보: " + userInfo);
+        try {
+            // 인가코드로 유저 정보 반환
+            GoogleLoginResult userResult = oauth2Service.getGoogleUserInfo(code);
+            GoogleUserInfo userInfo = userResult.getUserInfo();
+            String accessToken = userResult.getAccessToken();
 
-        // 사용자 조회
-        CamelCaseMap user = userService.findUserDetailByEmail(userInfo.getEmail());
+            // 사용자 조회
+            CamelCaseMap user = userService.findUserDetailByEmail(userInfo.getEmail());
 
-        // 사용자 없으면 회원가입 진행
-        if (user == null) {
-            userService.createUser(userInfo.getName(), userInfo.getEmail());
-            user = userService.findUserDetailByEmail(userInfo.getEmail());
+            // 사용자 없으면 회원가입 진행
+            if (user == null) {
+                userService.createUser(userInfo.getName(), userInfo.getEmail());
+                user = userService.findUserDetailByEmail(userInfo.getEmail());
+            }
+
+            // Google 액세스 토큰 저장 및 업데이트
+            userService.updateUserAccessToken(user.getInt("userId"), accessToken);
+
+            return ApiResponse.ok(user);
+        }  catch (Exception e) {
+            throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
-
-        return ApiResponse.ok(user);
     }
 
 }

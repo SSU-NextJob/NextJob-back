@@ -1,6 +1,7 @@
 // OAuth2Service.java - OAuth2 핵심 로직을 처리하는 서비스
 package com.nextjob.back.auth.service;
 
+import com.nextjob.back.auth.web.GoogleLoginResult;
 import com.nextjob.back.auth.web.GoogleTokenResponse;
 import com.nextjob.back.auth.web.GoogleUserInfo;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Date;
 
 @Service
 public class OAuth2Service {
@@ -34,14 +37,15 @@ public class OAuth2Service {
      * @param code 프론트엔드에서 받은 Google 인가 코드
      * @return Google 사용자 정보 DTO
      */
-    public GoogleUserInfo getGoogleUserInfo(String code) {
+    public GoogleLoginResult getGoogleUserInfo(String code) {
         // 1. 인가 코드로 액세스 토큰 요청
         GoogleTokenResponse tokenResponse = requestAccessToken(code);
-        System.out.println("[1] 액세스 토큰: " + tokenResponse);
-        System.out.println("[1-2] " + tokenResponse.getAccessToken());
+        String accessToken = tokenResponse.getAccessToken();
 
         // 2. 액세스 토큰으로 사용자 정보 요청
-        return requestUserInfo(tokenResponse.getAccessToken());
+        GoogleUserInfo userInfo = requestUserInfo(accessToken);
+
+        return new GoogleLoginResult(userInfo, accessToken, tokenResponse.getExpiresIn());
     }
 
     /**

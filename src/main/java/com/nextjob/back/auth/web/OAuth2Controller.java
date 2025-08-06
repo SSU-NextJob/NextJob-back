@@ -1,12 +1,15 @@
 package com.nextjob.back.auth.web;
 
 import com.nextjob.back.auth.service.OAuth2Service;
+import com.nextjob.back.user.domain.User;
 import com.nextjob.back.user.service.UserService;
 import com.nextjob.base.exception.CustomException;
 import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/oauth2")
@@ -52,4 +55,23 @@ public class OAuth2Controller {
         }
     }
 
+    /**
+     * 로그아웃 처리 엔드포인트
+     * 백엔드에 저장된 Google 액세스 토큰을 무효화합니다.
+     *
+     * @param body 로그아웃할 사용자의 ID를 포함하는 JSON
+     * @return 성공 여부
+     */
+    @PostMapping("/google/logout")
+    public ApiResponse<String> googleLogout(@RequestBody Map<String, Object> body) {
+        int userId = Integer.parseInt(body.get("userId").toString());
+        CamelCaseMap user = userService.findUserDetail(userId);
+
+        if (user == null || user.isEmpty()) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        oauth2Service.revokeAccessToken(user);
+        return ApiResponse.ok(null);
+    }
 }

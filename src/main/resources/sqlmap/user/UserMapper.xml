@@ -12,6 +12,7 @@
              , profile_image    /* 프로필이미지 */
              , is_visible       /* 노출여부 */
              , GetDetailCodeName('USER_TYPE', user_type) AS user_type      /* 개발분야 */
+             , access_token     /* 액세스 토큰 */
         FROM users
        WHERE 1=1
          AND user_id = #{userId}

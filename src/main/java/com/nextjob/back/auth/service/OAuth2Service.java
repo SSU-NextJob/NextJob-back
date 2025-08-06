@@ -1,21 +1,24 @@
-// OAuth2Service.java - OAuth2 핵심 로직을 처리하는 서비스
 package com.nextjob.back.auth.service;
 
 import com.nextjob.back.auth.web.GoogleLoginResult;
 import com.nextjob.back.auth.web.GoogleTokenResponse;
 import com.nextjob.back.auth.web.GoogleUserInfo;
+import com.nextjob.back.user.service.UserService;
+import com.nextjob.base.exception.CustomException;
+import com.nextjob.base.exception.ErrorCode;
+import com.nextjob.base.util.CamelCaseMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.Date;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @Service
 public class OAuth2Service {
 
+    private final UserService userService;
     @Value("${google.client.id}")
     private String clientId;
 
@@ -27,8 +30,9 @@ public class OAuth2Service {
 
     private final WebClient webClient;
 
-    public OAuth2Service(WebClient.Builder webClientBuilder) {
+    public OAuth2Service(WebClient.Builder webClientBuilder, UserService userService) {
         this.webClient = webClientBuilder.baseUrl("https://oauth2.googleapis.com").build();
+        this.userService = userService;
     }
 
     /**
@@ -82,5 +86,35 @@ public class OAuth2Service {
                 .retrieve()
                 .bodyToMono(GoogleUserInfo.class)
                 .block(); // 비동기 호출을 동기식으로 처리
+    }
+
+    /**
+     * Google 액세스 토큰을 무효화하는 메서드 (로그아웃 기능)
+     *
+     * @param user 무효화할 사용자
+     */
+    public void revokeAccessToken(CamelCaseMap user) {
+        String googleAccessToken = user.getString("accessToken");
+
+        if (googleAccessToken == null) {
+            throw new CustomException(ErrorCode.ACCESS_TOKEN_NOT_FOUND);
+        }
+
+        // 토큰 무효화 요청
+        WebClient revocationClient = WebClient.builder().baseUrl("https://oauth2.googleapis.com").build();
+        try {
+            revocationClient.post()
+                    .uri("/revoke")
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                    .body(BodyInserters.fromFormData("token", googleAccessToken))
+                    .retrieve()
+                    .toBodilessEntity()
+                    .block();
+
+            // DB에서 Google 액세스 토큰 정보 제거
+            userService.updateUserAccessToken(user.getInt("userId"), null);
+        } catch (WebClientResponseException e) {
+            throw new RuntimeException("Failed to revoke Google access token: " + e.getResponseBodyAsString(), e);
+        }
     }
 }

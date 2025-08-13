@@ -29,6 +29,10 @@ jobs:
     # Spring Boot 어플리케이션 Build
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      env:
+        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
 
     # Docker 이미지 Build
     - name: Docker Image Build

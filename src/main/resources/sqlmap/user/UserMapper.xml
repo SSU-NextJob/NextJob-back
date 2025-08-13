@@ -12,9 +12,23 @@
              , profile_image    /* 프로필이미지 */
              , is_visible       /* 노출여부 */
              , GetDetailCodeName('USER_TYPE', user_type) AS user_type      /* 개발분야 */
+             , access_token     /* 액세스 토큰 */
         FROM users
        WHERE 1=1
          AND user_id = #{userId}
+    </select>
+
+    <select id="findUserDetailByEmail" resultType="CamelCaseMap">
+        SELECT user_id          /* 사용자ID */
+             , name             /* 사용자명 */
+             , email            /* 이메일 */
+             , description      /* 섦명 */
+             , tech_stack       /* 기술스택 */
+             , profile_image    /* 프로필이미지 */
+             , is_visible       /* 노출여부 */
+             , GetDetailCodeName('USER_TYPE', user_type) AS user_type      /* 개발분야 */
+        FROM users
+        WHERE email = #{email}
     </select>
 
     <select id="findUserDetailByUserId" resultType="CamelCaseMap">
@@ -91,6 +105,23 @@
     <update id="updateUserVisibility">
         UPDATE users
         SET is_visible = #{isVisible}
+        WHERE user_id = #{userId}
+    </update>
+
+    <insert id="createUser">
+        <selectKey keyProperty="userId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO users (
+           name, email, is_visible, create_date
+        ) VALUES (
+           #{name}, #{email}, FALSE, NOW()
+        )
+    </insert>
+
+    <update id="updateUserAccessToken">
+        UPDATE users
+        SET access_token = #{accessToken}
         WHERE user_id = #{userId}
     </update>
 </mapper>

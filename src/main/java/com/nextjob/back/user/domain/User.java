@@ -22,9 +22,8 @@ public class User extends Domain {
     /* 프로필이미지 */
     private String profileImage;
 
-    public int getUserId() {
-        return userId;
-    }
+    /* 액세스 토큰 */
+    private String accessToken;
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -68,5 +67,13 @@ public class User extends Domain {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

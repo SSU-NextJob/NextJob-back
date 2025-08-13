@@ -34,4 +34,13 @@ public interface UserMapper {
 
     /* 사용자 노출 여부 수정 */
     void updateUserVisibility(@Param("userId") int userId, @Param("isVisible") Boolean isVisible);
+
+    /* 사용자 상세 조회 (email) */
+    CamelCaseMap findUserDetailByEmail(@Param("email") String email);
+
+    /* 사용자 생성 (회원가입) */
+    void createUser(@Param("name") String name, @Param("email") String email);
+
+    /* 액세스 토큰 저장 */
+    void updateUserAccessToken(@Param("userId") int userId, @Param("accessToken") String accessToken);
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nextjob.back.workspace.service.WorkspaceMapper">
+    <resultMap id="WorkspaceDetailResultMap" type="com.nextjob.back.workspace.web.WorkspaceDetailResponse">
+        <id property="workspaceId" column="workspace_id" />
+        <result property="projectId" column="project_id" />
+        <association property="kanban" javaType="com.nextjob.back.kanbanBoard.web.KanbanDetailResponse">
+            <result property="kanbanId" column="kanban_id" />
+        </association>
+        <association property="drive" javaType="com.nextjob.back.drive.web.DriveDetailResponse">
+            <result property="driveId" column="drive_id" />
+        </association>
+    </resultMap>
+
+    <select id="findWorkspaceDetail" resultMap="WorkspaceDetailResultMap">
+        SELECT ws.workspace_id, ws.project_id, kb.kanban_id, d.drive_id
+        FROM workspaces ws
+        JOIN kanban_boards kb ON ws.workspace_id = kb.workspace_id
+        JOIN drives d ON ws.workspace_id = d.workspace_id
+        WHERE ws.workspace_id = #{workspaceId}
+    </select>
+</mapper>

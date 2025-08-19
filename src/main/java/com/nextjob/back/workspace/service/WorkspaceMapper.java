@@ -1,5 +1,6 @@
 package com.nextjob.back.workspace.service;
 
+import com.nextjob.back.workspace.domain.Workspace;
 import com.nextjob.back.workspace.web.WorkspaceDetailResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,4 +12,7 @@ public interface WorkspaceMapper {
 
     /* 워크스페이스 상세 조회 */
     WorkspaceDetailResponse findWorkspaceDetail(@Param("workspaceId") int workspaceId);
+
+    /* 워크스페이스 생성 */
+    int insertWorkSpace(Workspace workspace);
 }

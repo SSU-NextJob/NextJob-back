@@ -18,4 +18,91 @@
         FROM detail_codes dc
         WHERE dc.group_code = 'DEFAULT_KANBAN_COLUMN'
     </insert>
+
+    <select id="findTaskList" resultType="CamelCaseMap">
+        /* KanbanBoardMapper.findTaskList */
+        SELECT column_id
+             , task_id
+             , subject
+             , importance
+             , start_date
+             , end_date
+             , sort
+          FROM kanban_tasks
+         WHERE 1=1
+           AND task_id = #{taskId}
+           AND kanban_id = #{kanbanId}
+    </select>
+
+    <insert id="insertTask">
+        /* KanbanBoardMapper.insertTask */
+        <selectKey keyProperty="taskId" resultType="int" order="BEFORE">
+            SELECT IFNULL(MAX(task_id)+1, 1)
+              FROM kanban_tasks
+        </selectKey>
+        INSERT INTO kanban_tasks (
+                    task_id
+                  , kanban_id
+                  , column_id
+                  , subject
+                  , content
+                  , start_date
+                  , end_date
+                  , sort
+                  , importance
+                  , create_date
+                  , modify_date
+                  , user_id
+        ) VALUES (
+                    #{taskId}
+                  , #{kanbanId}
+                  , #{columnId}
+                  , #{subject}
+                  , #{content}
+                  , #{startDate}
+                  , #{endDate}
+                  , #{sort}
+                  , #{importance}
+                  , NOW()
+                  , NOW()
+                  , #{userId}
+        )
+    </insert>
+
+    <insert id="insertTaskUsers">
+        /* KanbanBoardMapper.insertTaskUsers */
+        INSERT INTO task_users (
+                    user_id
+                  , task_id
+        ) VALUES (
+                    #{userId}
+                  , #{taskId}
+        )
+    </insert>
+
+    <update id="updateTask">
+        /* KanbanBoardMapper.updateTask */
+        UPDATE kanban_tasks
+           SET subject = #{subject}
+             , content = #{content}
+             , start_date = #{startDate}
+             , end_date = #{endDate}
+             , importance = #{importance}
+             , modify_date = NOW()
+         WHERE task_id = #{taskId}
+           AND kanban_id = #{kanbanId}
+           AND column_id = #{columnId}
+    </update>
+
+    <delete id="deleteTaskUsers">
+        /* KanbanBoardMapper.deleteTaskUsers */
+
+    </delete>
+
+    <update id="deleteTask">
+        /* KanbanBoardMapper.deleteTask */
+        UPDATE kanban_tasks
+           SET delete_date = NOW()
+         WHERE task_id = #{taskId}
+    </update>
 </mapper>

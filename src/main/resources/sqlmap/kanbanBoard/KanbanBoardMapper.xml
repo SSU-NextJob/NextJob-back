@@ -8,11 +8,13 @@
     <insert id="insertKanbanDefaultColumn">
         INSERT INTO kanban_columns (
             kanban_id,
+            column_id,
             name,
             sort
         )
         SELECT
             #{kanbanId},
+            dc.detail_code,
             dc.detail_name,
             dc.detail_code
         FROM detail_codes dc

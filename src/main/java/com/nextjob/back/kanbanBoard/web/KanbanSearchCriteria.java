@@ -1,11 +1,9 @@
 package com.nextjob.back.kanbanBoard.web;
 
-import com.nextjob.back.kanbanBoard.domain.TaskUsers;
 import com.nextjob.base.domain.Domain;
 import com.nextjob.base.web.servlet.search.Search;
 
 import java.util.Date;
-import java.util.List;
 
 public class KanbanSearchCriteria extends Domain implements Search {
 
@@ -36,7 +34,10 @@ public class KanbanSearchCriteria extends Domain implements Search {
     /* 중요도 */
     private String importance;
 
-    private List<TaskUsers> users;
+    /* 생성자 */
+    private int userId;
+
+    private int[] user;
 
     public int getKanbanId() {
         return kanbanId;
@@ -110,11 +111,19 @@ public class KanbanSearchCriteria extends Domain implements Search {
         this.importance = importance;
     }
 
-    public List<TaskUsers> getUsers() {
-        return users;
+    public int[] getUser() {
+        return user;
     }
 
-    public void setUsers(List<TaskUsers> users) {
-        this.users = users;
+    public void setUser(int[] user) {
+        this.user = user;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

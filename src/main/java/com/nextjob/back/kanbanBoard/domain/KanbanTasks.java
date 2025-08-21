@@ -33,6 +33,9 @@ public class KanbanTasks extends Domain {
     /* 중요도 */
     private String importance;
 
+    /* 생성자 */
+    private int userId;
+
     public int getKanbanId() {
         return kanbanId;
     }
@@ -103,5 +106,13 @@ public class KanbanTasks extends Domain {
 
     public void setImportance(String importance) {
         this.importance = importance;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

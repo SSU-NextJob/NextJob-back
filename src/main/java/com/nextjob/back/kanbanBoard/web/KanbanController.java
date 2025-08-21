@@ -1,13 +1,12 @@
 package com.nextjob.back.kanbanBoard.web;
 
 import com.nextjob.back.kanbanBoard.service.KanbanService;
-import com.nextjob.base.exception.CustomException;
-import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,7 @@ public class KanbanController {
 
         List<CamelCaseMap> taskList = kanbanService.findTaskList(kanbanId);
         if(ObjectUtils.isEmpty(taskList)) {
-            throw new CustomException(ErrorCode.TASK_NOT_FOUND);
+            taskList = new ArrayList<>();
         }
         return ApiResponse.ok(taskList);
     }

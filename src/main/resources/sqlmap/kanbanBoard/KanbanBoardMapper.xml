@@ -33,6 +33,7 @@
           FROM kanban_tasks
          WHERE 1=1
            AND kanban_id = #{kanbanId}
+           AND delete_date IS NULL
     </select>
 
     <insert id="insertTask">

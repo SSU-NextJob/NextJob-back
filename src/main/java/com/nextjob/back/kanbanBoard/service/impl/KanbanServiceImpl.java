@@ -47,12 +47,16 @@ public class KanbanServiceImpl implements KanbanService {
         kanbanTasks.setEndDate(kanbanSearchCriteria.getEndDate());
         kanbanTasks.setSort(kanbanSearchCriteria.getSort());
         kanbanTasks.setImportance(kanbanSearchCriteria.getImportance());
+        kanbanTasks.setUserId(kanbanSearchCriteria.getUserId());
 
         int taskInsertedCount = kanbanBoardMapper.insertTask(kanbanTasks);
 
-        List<TaskUsers> taskUserList = kanbanSearchCriteria.getUsers();
-        for (TaskUsers taskUser : taskUserList) {
-            int userInsertedCount = kanbanBoardMapper.insertTaskUsers(taskUser);
+        for (int i = 0; i < kanbanSearchCriteria.getUser().length; i++) {
+            TaskUsers user = new TaskUsers();
+            user.setUserId(kanbanSearchCriteria.getUser()[i]);
+            user.setTaskId(kanbanTasks.getTaskId());
+            user.setKanbanId(kanbanSearchCriteria.getKanbanId());
+            int userInsertedCount = kanbanBoardMapper.insertTaskUsers(user);
             if(userInsertedCount == 0) {
                 throw new CustomException(ErrorCode.INSERT_ERROR);
             }
@@ -87,9 +91,12 @@ public class KanbanServiceImpl implements KanbanService {
 
         int userDeletedCount = kanbanBoardMapper.deleteTaskUsers(kanbanTasks.getTaskId(), kanbanTasks.getKanbanId());
 
-        List<TaskUsers> taskUserList = kanbanSearchCriteria.getUsers();
-        for (TaskUsers taskUser : taskUserList) {
-            int userInsertedCount = kanbanBoardMapper.insertTaskUsers(taskUser);
+        for (int i = 0; i < kanbanSearchCriteria.getUser().length; i++) {
+            TaskUsers user = new TaskUsers();
+            user.setUserId(kanbanSearchCriteria.getUser()[i]);
+            user.setTaskId(kanbanTasks.getTaskId());
+            user.setKanbanId(kanbanTasks.getKanbanId());
+            int userInsertedCount = kanbanBoardMapper.insertTaskUsers(user);
             if(userInsertedCount == 0) {
                 throw new CustomException(ErrorCode.INSERT_ERROR);
             }

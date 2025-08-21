@@ -32,7 +32,6 @@
              , sort
           FROM kanban_tasks
          WHERE 1=1
-           AND task_id = #{taskId}
            AND kanban_id = #{kanbanId}
     </select>
 
@@ -41,6 +40,7 @@
         <selectKey keyProperty="taskId" resultType="int" order="BEFORE">
             SELECT IFNULL(MAX(task_id)+1, 1)
               FROM kanban_tasks
+             WHERE kanban_id = #{kanbanId}
         </selectKey>
         INSERT INTO kanban_tasks (
                     task_id
@@ -76,9 +76,11 @@
         INSERT INTO task_users (
                     user_id
                   , task_id
+                  , kanban_id
         ) VALUES (
                     #{userId}
                   , #{taskId}
+                  , #{kanbanId}
         )
     </insert>
 
@@ -98,13 +100,17 @@
 
     <delete id="deleteTaskUsers">
         /* KanbanBoardMapper.deleteTaskUsers */
-
+        DELETE
+          FROM task_users
+         WHERE task_id = #{taskId}
+           AND kanban_id = #{kanbanId}
     </delete>
 
     <update id="deleteTask">
         /* KanbanBoardMapper.deleteTask */
         UPDATE kanban_tasks
            SET delete_date = NOW()
-         WHERE task_id = #{taskId}
+         WHERE kanban_id = #{kanbanId}
+           AND task_id = #{taskId}
     </update>
 </mapper>

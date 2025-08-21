@@ -31,9 +31,8 @@ public class KanbanController {
     @GetMapping("/tasks")
     public ApiResponse<List<CamelCaseMap>> findTaskList(@RequestBody Map<String, Object> body) {
         int kanbanId = Integer.parseInt(body.get("kanbanId").toString());
-        int taskId = Integer.parseInt(body.get("taskId").toString());
 
-        List<CamelCaseMap> taskList = kanbanService.findTaskList(kanbanId, taskId);
+        List<CamelCaseMap> taskList = kanbanService.findTaskList(kanbanId);
         if(ObjectUtils.isEmpty(taskList)) {
             throw new CustomException(ErrorCode.TASK_NOT_FOUND);
         }
@@ -71,9 +70,10 @@ public class KanbanController {
      * @return
      */
     @DeleteMapping("/tasks/{taskId}")
-    public ApiResponse<Map<String, Object>> deleteTask(@PathVariable("taskId") int taskId) {
+    public ApiResponse<Map<String, Object>> deleteTask(@PathVariable("taskId") int taskId, @RequestBody KanbanSearchCriteria kanbanSearchCriteria) {
         Map<String, Object> result = new HashMap<>();
-        result = kanbanService.deleteTask(taskId);
+        kanbanSearchCriteria.setTaskId(taskId);
+        result = kanbanService.deleteTask(kanbanSearchCriteria);
         return ApiResponse.ok(result);
     }
 

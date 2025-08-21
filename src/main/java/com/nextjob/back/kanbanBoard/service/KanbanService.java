@@ -8,11 +8,11 @@ import java.util.Map;
 
 public interface KanbanService {
 
-    List<CamelCaseMap> findTaskList(int kanbanId, int taskId);
+    List<CamelCaseMap> findTaskList(int kanbanId);
 
     Map<String, Object> insertTask(KanbanSearchCriteria kanbanSearchCriteria);
 
     Map<String, Object> updateTask(KanbanSearchCriteria kanbanSearchCriteria);
 
-    Map<String, Object> deleteTask(int taskId);
+    Map<String, Object> deleteTask(KanbanSearchCriteria kanbanSearchCriteria);
 }

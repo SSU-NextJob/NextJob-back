@@ -27,12 +27,11 @@ public class KanbanServiceImpl implements KanbanService {
      * 칸반 작업 목록 조회
      *
      * @param kanbanId
-     * @param taskId
      * @return
      */
     @Override
-    public List<CamelCaseMap> findTaskList(int kanbanId, int taskId) {
-        return kanbanBoardMapper.findTaskList(kanbanId, taskId);
+    public List<CamelCaseMap> findTaskList(int kanbanId) {
+        return kanbanBoardMapper.findTaskList(kanbanId);
     }
 
     @Override
@@ -86,7 +85,7 @@ public class KanbanServiceImpl implements KanbanService {
 
         int taskUpdatedCount = kanbanBoardMapper.updateTask(kanbanTasks);
 
-        int userDeletedCount = kanbanBoardMapper.deleteTaskUsers(kanbanTasks.getTaskId());
+        int userDeletedCount = kanbanBoardMapper.deleteTaskUsers(kanbanTasks.getTaskId(), kanbanTasks.getKanbanId());
 
         List<TaskUsers> taskUserList = kanbanSearchCriteria.getUsers();
         for (TaskUsers taskUser : taskUserList) {
@@ -107,9 +106,21 @@ public class KanbanServiceImpl implements KanbanService {
     }
 
     @Override
-    public Map<String, Object> deleteTask(int taskId) {
-        int taskDeletedCount = kanbanBoardMapper.deleteTask(taskId);
-        int userDeletedCount = kanbanBoardMapper.deleteTaskUsers(taskId);
-        return null;
+    public Map<String, Object> deleteTask(KanbanSearchCriteria kanbanSearchCriteria) {
+        Map<String, Object> result = new HashMap<>();
+
+        int taskId = kanbanSearchCriteria.getTaskId();
+        int kanbanId = kanbanSearchCriteria.getKanbanId();
+        int taskDeletedCount = kanbanBoardMapper.deleteTask(taskId, kanbanId);
+        int userDeletedCount = kanbanBoardMapper.deleteTaskUsers(taskId, kanbanId);
+
+        if (taskDeletedCount > 0) {
+            result.put("success", true);
+            result.put("message", "저장되었습니다.");
+        } else {
+            throw new CustomException(ErrorCode.DELETE_ERROR);
+        }
+
+        return result;
     }
 }

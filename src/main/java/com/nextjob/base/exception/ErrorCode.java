@@ -20,7 +20,8 @@ public enum ErrorCode {
 
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다."),
     INSERT_ERROR(50001, HttpStatus.INTERNAL_SERVER_ERROR, "저장에 실패하였습니다."),
-    UPDATE_ERROR(50002, HttpStatus.INTERNAL_SERVER_ERROR, "수정에 실패하였습니다.");
+    UPDATE_ERROR(50002, HttpStatus.INTERNAL_SERVER_ERROR, "수정에 실패하였습니다."),
+    DELETE_ERROR(50003, HttpStatus.INTERNAL_SERVER_ERROR, "삭제에 실패하였습니다.");
 
     private final Integer code;
     private final HttpStatus httpStatus;

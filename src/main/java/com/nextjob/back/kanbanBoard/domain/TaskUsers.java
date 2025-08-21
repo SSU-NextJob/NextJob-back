@@ -8,6 +8,8 @@ public class TaskUsers extends Domain {
 
     private int taskId;
 
+    private int kanbanId;
+
     public int getUserId() {
         return userId;
     }
@@ -22,5 +24,13 @@ public class TaskUsers extends Domain {
 
     public void setTaskId(int taskId) {
         this.taskId = taskId;
+    }
+
+    public int getKanbanId() {
+        return kanbanId;
+    }
+
+    public void setKanbanId(int kanbanId) {
+        this.kanbanId = kanbanId;
     }
 }

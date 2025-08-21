@@ -18,7 +18,7 @@ public interface KanbanBoardMapper {
     int insertKanbanDefaultColumn(int kanbanId);
 
     /* 칸반 작업 목록 조회 */
-    List<CamelCaseMap> findTaskList(@Param("kanbanId") int kanbanId, @Param("taskId") int taskId);
+    List<CamelCaseMap> findTaskList(@Param("kanbanId") int kanbanId);
 
     int insertTask(KanbanTasks kanbanTasks);
 
@@ -26,7 +26,7 @@ public interface KanbanBoardMapper {
 
     int updateTask(KanbanTasks kanbanTasks);
 
-    int deleteTaskUsers(@Param("taskId") int taskId);
+    int deleteTaskUsers(@Param("taskId") int taskId, @Param("kanbanId") int kanbanId);
 
-    int deleteTask(@Param("taskId") int taskId);
+    int deleteTask(@Param("taskId") int taskId, @Param("kanbanId") int kanbanId);
 }

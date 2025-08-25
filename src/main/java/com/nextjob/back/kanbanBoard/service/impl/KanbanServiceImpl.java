@@ -130,4 +130,10 @@ public class KanbanServiceImpl implements KanbanService {
 
         return result;
     }
+
+    @Override
+    public List<CamelCaseMap> findColumnList(int kanbanId) {
+        return kanbanBoardMapper.findColumnList(kanbanId);
+    }
+
 }

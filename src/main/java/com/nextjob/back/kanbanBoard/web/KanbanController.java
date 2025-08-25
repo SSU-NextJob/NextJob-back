@@ -76,4 +76,20 @@ public class KanbanController {
         return ApiResponse.ok(result);
     }
 
+    /**
+     * 컬럼 목록 조회
+     *
+     * @param body
+     * @return
+     */
+    @GetMapping("/columns")
+    public ApiResponse<List<CamelCaseMap>> findColumnList(@RequestBody Map<String, Object> body) {
+        int kanbanId = Integer.parseInt(body.get("kanbanId").toString());
+
+        List<CamelCaseMap> columnList = kanbanService.findColumnList(kanbanId);
+        if(ObjectUtils.isEmpty(columnList)) {
+            columnList = new ArrayList<>();
+        }
+        return ApiResponse.ok(columnList);
+    }
 }

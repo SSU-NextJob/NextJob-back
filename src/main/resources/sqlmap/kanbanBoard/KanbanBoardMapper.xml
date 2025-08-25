@@ -115,6 +115,32 @@
            AND task_id = #{taskId}
     </update>
 
+    <select id="findTaskDetail" resultType="CamelCaseMap">
+        /* KanbanBoardMapper.findTaskDetail */
+        SELECT
+            column_id ,
+            task_id ,
+            subject ,
+            content ,
+            importance ,
+            start_date ,
+            end_date ,
+            sort
+        FROM kanban_tasks
+        WHERE task_id = #{taskId} AND kanban_id = #{kanbanId} AND delete_date IS NULL;
+    </select>
+
+    <select id="findTaskUserList" resultType="CamelCaseMap">
+        /* KanbanBoardMapper.findTaskUserList */
+        SELECT
+            a.user_id,
+            b.name,
+            b.profile_image
+        FROM task_users AS a
+        LEFT JOIN users AS b ON a.user_id  = b.user_id
+        WHERE a.kanban_id = #{kanbanId} AND a.task_id = #{taskId};
+    </select>
+
     <select id="findColumnList" resultType="CamelCaseMap">
         /* KanbanBoardMapper.findTaskList */
         SELECT column_id

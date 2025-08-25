@@ -1,6 +1,8 @@
 package com.nextjob.back.kanbanBoard.web;
 
 import com.nextjob.back.kanbanBoard.service.KanbanService;
+import com.nextjob.base.exception.CustomException;
+import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.util.ObjectUtils;
@@ -73,6 +75,21 @@ public class KanbanController {
         Map<String, Object> result = new HashMap<>();
         kanbanSearchCriteria.setTaskId(taskId);
         result = kanbanService.deleteTask(kanbanSearchCriteria);
+        return ApiResponse.ok(result);
+    }
+
+    /**
+     * 작업 상세 조회
+     *
+     * @return
+     */
+    @GetMapping("/tasks/{taskId}")
+    public ApiResponse<Map<String, Object>> findTaskDetail(@PathVariable("taskId") int taskId, @RequestBody Map<String, Object> body) {
+        int kanbanId = Integer.parseInt(body.get("kanbanId").toString());
+        Map<String, Object> result = kanbanService.findTaskDetail(kanbanId, taskId);
+        if (result == null) {
+            throw new CustomException(ErrorCode.TASK_NOT_FOUND);
+        }
         return ApiResponse.ok(result);
     }
 

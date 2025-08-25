@@ -131,6 +131,21 @@ public class KanbanServiceImpl implements KanbanService {
         return result;
     }
 
+    /**
+     * 칸반 작업 상세 조회
+     *
+     * @param taskId
+     * @return
+     */
+    @Override
+    public Map<String, Object> findTaskDetail(int kanbanId, int taskId) {
+        Map<String, Object> result = kanbanBoardMapper.findTaskDetail(kanbanId, taskId);
+        if(!result.isEmpty()) {
+            result.put("users", kanbanBoardMapper.findTaskUserList(kanbanId, taskId));
+        }
+        return result;
+    }
+
     @Override
     public List<CamelCaseMap> findColumnList(int kanbanId) {
         return kanbanBoardMapper.findColumnList(kanbanId);

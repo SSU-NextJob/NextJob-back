@@ -16,5 +16,7 @@ public interface KanbanService {
 
     Map<String, Object> deleteTask(KanbanSearchCriteria kanbanSearchCriteria);
 
+    Map<String, Object> findTaskDetail(int kanbanId, int taskId);
+
     List<CamelCaseMap> findColumnList(int kanbanId);
 }

@@ -114,4 +114,15 @@
          WHERE kanban_id = #{kanbanId}
            AND task_id = #{taskId}
     </update>
+
+    <select id="findColumnList" resultType="CamelCaseMap">
+        /* KanbanBoardMapper.findTaskList */
+        SELECT column_id
+             , name
+             , sort
+        FROM kanban_columns
+        WHERE 1=1
+          AND kanban_id = #{kanbanId}
+          AND delete_date IS NULL
+    </select>
 </mapper>

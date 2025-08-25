@@ -29,4 +29,7 @@ public interface KanbanBoardMapper {
     int deleteTaskUsers(@Param("taskId") int taskId, @Param("kanbanId") int kanbanId);
 
     int deleteTask(@Param("taskId") int taskId, @Param("kanbanId") int kanbanId);
+
+    /* 컬럼 목록 조회 */
+    List<CamelCaseMap> findColumnList(int kanbanId);
 }

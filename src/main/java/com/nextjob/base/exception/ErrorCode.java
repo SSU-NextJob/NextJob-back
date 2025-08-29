@@ -13,6 +13,7 @@ public enum ErrorCode {
     POST_NOT_FOUND(40403, HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."),
     USER_NOT_FOUND(40404, HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."),
     TASK_NOT_FOUND(40405, HttpStatus.NOT_FOUND, "작업 목록을 찾을 수 없습니다."),
+    FILE_NOT_FOUND(40406, HttpStatus.NOT_FOUND, "파일을 찾을 수 없습니다."),
 
     CONFLICT(40900, HttpStatus.CONFLICT, "중복된 요청입니다."),
     CONFLICT_APPLY(40901, HttpStatus.CONFLICT, "이미 지원한 게시글입니다."),

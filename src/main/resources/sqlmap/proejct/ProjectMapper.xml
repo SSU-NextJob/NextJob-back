@@ -66,13 +66,15 @@
     <!-- 내가 만든 프로젝트 목록 조회 -->
     <select id="findCreateProjectList" resultType="CamelCaseMap">
         /* ProjectMapper.findCreateProjectList */
-        SELECT project_id
+        SELECT projects.project_id
              , name
              , content
              , GetDetailCodeName('PROJECT_TYPE', type) AS type
              , start_at
              , end_at
+             , ws.workspace_id
          FROM projects
+         JOIN workspaces ws ON projects.project_id = ws.project_id
         WHERE 1=1
           AND user_id = #{userId}
     </select>
@@ -86,9 +88,12 @@
              , GetDetailCodeName('PROJECT_TYPE', proj.type) AS type
              , proj.start_at
              , proj.end_at
+             , ws.workspace_id
          FROM projects proj
     LEFT JOIN project_members proj_mem
            ON proj.project_id = proj_mem.project_id
+    JOIN workspaces ws
+           ON proj.project_id = ws.project_id
         WHERE 1=1
           AND proj_mem.user_id = #{userId}
           AND proj_mem.job_title = 'MEMBER'

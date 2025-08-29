@@ -12,12 +12,16 @@ public enum ErrorCode {
     PROJECT_NOT_FOUND(40402, HttpStatus.NOT_FOUND, "프로젝트를 찾을 수 없습니다."),
     POST_NOT_FOUND(40403, HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."),
     USER_NOT_FOUND(40404, HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."),
+    TASK_NOT_FOUND(40405, HttpStatus.NOT_FOUND, "작업 목록을 찾을 수 없습니다."),
 
     CONFLICT(40900, HttpStatus.CONFLICT, "중복된 요청입니다."),
     CONFLICT_APPLY(40901, HttpStatus.CONFLICT, "이미 지원한 게시글입니다."),
     CONFLICT_PROJECT(40902, HttpStatus.CONFLICT, "이미 참여 중인 프로젝트입니다."),
 
-    INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다.");
+    INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다."),
+    INSERT_ERROR(50001, HttpStatus.INTERNAL_SERVER_ERROR, "저장에 실패하였습니다."),
+    UPDATE_ERROR(50002, HttpStatus.INTERNAL_SERVER_ERROR, "수정에 실패하였습니다."),
+    DELETE_ERROR(50003, HttpStatus.INTERNAL_SERVER_ERROR, "삭제에 실패하였습니다.");
 
     private final Integer code;
     private final HttpStatus httpStatus;

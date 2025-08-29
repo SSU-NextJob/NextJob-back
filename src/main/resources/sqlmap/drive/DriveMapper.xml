@@ -4,4 +4,15 @@
     <insert id="insertDrive">
         INSERT INTO drives (workspace_id, path) VALUES (#{workspaceId}, #{path});
     </insert>
+    <insert id="insertBlob" parameterType="com.nextjob.back.drive.domain.Blob">
+        INSERT INTO blobs (
+            workspace_id,
+            blob_url,
+            drive_id
+        ) VALUES (
+             (SELECT workspace_id FROM drives WHERE drive_id = #{driveId}),
+             #{blobUrl},
+             #{driveId}
+        )
+    </insert>
 </mapper>

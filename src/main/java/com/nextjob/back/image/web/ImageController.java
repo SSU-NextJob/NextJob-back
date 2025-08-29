@@ -43,4 +43,19 @@ public class ImageController {
 
         return ApiResponse.ok(response);
     }
+
+    /**
+     * 단일 이미지 삭제 API
+     * @param body 삭제할 이미지의 URL이 담긴 JSON
+     * @return 성공 여부
+     */
+    @DeleteMapping("/delete")
+    public ApiResponse<Void> deleteImage(@RequestBody Map<String, String> body) {
+        String imageUrl = body.get("imageUrl");
+
+        // 이미지 S3에서 삭제
+        imageService.deleteImage(imageUrl);
+
+        return ApiResponse.ok(null);
+    }
 }

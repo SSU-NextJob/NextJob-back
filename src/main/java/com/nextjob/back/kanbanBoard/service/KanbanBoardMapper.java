@@ -1,6 +1,7 @@
 package com.nextjob.back.kanbanBoard.service;
 
 import com.nextjob.back.kanbanBoard.domain.KanbanBoard;
+import org.apache.ibatis.annotations.Mapper;
 import com.nextjob.back.kanbanBoard.domain.KanbanTasks;
 import com.nextjob.back.kanbanBoard.domain.TaskUsers;
 import com.nextjob.base.util.CamelCaseMap;

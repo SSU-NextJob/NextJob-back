@@ -74,7 +74,7 @@
              , end_at
              , ws.workspace_id
          FROM projects
-         JOIN workspaces ws ON projects.project_id = ws.project_id
+         LEFT JOIN workspaces ws ON projects.project_id = ws.project_id
         WHERE 1=1
           AND user_id = #{userId}
     </select>
@@ -92,7 +92,7 @@
          FROM projects proj
     LEFT JOIN project_members proj_mem
            ON proj.project_id = proj_mem.project_id
-    JOIN workspaces ws
+    LEFT JOIN workspaces ws
            ON proj.project_id = ws.project_id
         WHERE 1=1
           AND proj_mem.user_id = #{userId}

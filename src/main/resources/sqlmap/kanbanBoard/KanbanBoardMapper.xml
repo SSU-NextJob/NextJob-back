@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nextjob.back.kanbanBoard.service.KanbanBoardMapper">
+    <insert id="insertKanbanBoard" parameterType="com.nextjob.back.kanbanBoard.domain.KanbanBoard" useGeneratedKeys="true" keyProperty="kanbanId">
+        INSERT INTO kanban_boards (workspace_id) VALUES (#{workspaceId});
+    </insert>
+
+    <insert id="insertKanbanDefaultColumn">
+        INSERT INTO kanban_columns (
+            kanban_id,
+            column_id,
+            name,
+            sort
+        )
+        SELECT
+            #{kanbanId},
+            dc.detail_code,
+            dc.detail_name,
+            dc.detail_code
+        FROM detail_codes dc
+        WHERE dc.group_code = 'DEFAULT_KANBAN_COLUMN'
+    </insert>
+</mapper>

@@ -1,5 +1,8 @@
 package com.nextjob.back.project.service.impl;
 
+import com.nextjob.back.drive.service.DriveMapper;
+import com.nextjob.back.kanbanBoard.domain.KanbanBoard;
+import com.nextjob.back.kanbanBoard.service.KanbanBoardMapper;
 import com.nextjob.back.notification.domain.Notification;
 import com.nextjob.back.notification.service.NotificationMapper;
 import com.nextjob.back.project.domain.Project;
@@ -7,6 +10,8 @@ import com.nextjob.back.project.service.ProjectMapper;
 import com.nextjob.back.project.service.ProjectService;
 import com.nextjob.back.project.web.ProjectSearchCriteria;
 import com.nextjob.back.project.web.ProjectUserResponse;
+import com.nextjob.back.workspace.domain.Workspace;
+import com.nextjob.back.workspace.service.WorkspaceMapper;
 import com.nextjob.base.exception.CustomException;
 import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
@@ -19,10 +24,16 @@ public class ProjectServiceImpl implements ProjectService {
 
     private ProjectMapper projectMapper;
     private NotificationMapper notificationMapper;
+    private WorkspaceMapper workspaceMapper;
+    private KanbanBoardMapper kanbanBoardMapper;
+    private DriveMapper driveMapper;
 
-    public ProjectServiceImpl(ProjectMapper projectMapper, NotificationMapper notificationMapper) {
+    public ProjectServiceImpl(ProjectMapper projectMapper, NotificationMapper notificationMapper, WorkspaceMapper workspaceMapper, KanbanBoardMapper kanbanBoardMapper, DriveMapper driveMapper) {
         this.projectMapper = projectMapper;
         this.notificationMapper = notificationMapper;
+        this.workspaceMapper = workspaceMapper;
+        this.kanbanBoardMapper = kanbanBoardMapper;
+        this.driveMapper = driveMapper;
     }
 
     @Override
@@ -32,6 +43,22 @@ public class ProjectServiceImpl implements ProjectService {
 
         // 2. 멤버에 팀장을 추가
         projectMapper.insertMember(project.getProjectId(), project.getCreatorId(), "LEADER");
+
+        // 3. 워크스페이스 생성
+        Workspace workspace = new Workspace();
+        workspace.setProjectId(project.getProjectId());
+        workspaceMapper.insertWorkSpace(workspace);
+
+        // 4. 칸반보드 생성
+        KanbanBoard kanbanBoard = new KanbanBoard();
+        kanbanBoard.setWorkspaceId(workspace.getWorkspaceId());
+        kanbanBoardMapper.insertKanbanBoard(kanbanBoard);
+        // 4-1. 칸반 기본 컬럼 생성
+        kanbanBoardMapper.insertKanbanDefaultColumn(kanbanBoard.getKanbanId());
+
+        // 5. 드라이브 생성
+        String drivePath = Integer.toString(workspace.getWorkspaceId()); // TODO: 드라이브 위치 지정
+        driveMapper.insertDrive(workspace.getWorkspaceId(), drivePath);
 
         return count;
     }

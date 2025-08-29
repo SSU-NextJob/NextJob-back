@@ -19,4 +19,8 @@
         JOIN drives d ON ws.workspace_id = d.workspace_id
         WHERE ws.workspace_id = #{workspaceId}
     </select>
+
+    <insert id="insertWorkSpace" parameterType="com.nextjob.back.workspace.domain.Workspace" useGeneratedKeys="true" keyProperty="workspaceId">
+        INSERT INTO workspaces (project_id) VALUES (#{projectId});
+    </insert>
 </mapper>

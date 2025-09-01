@@ -15,4 +15,37 @@
              #{driveId}
         )
     </insert>
+
+    <select id="findFileList" resultType="CamelCaseMap">
+        /* DriveMapper.findFileList */
+        SELECT b.name AS file_name
+             , b.blob_url
+             , b.ext
+             , b.size
+             , b.create_date
+             , u.name AS user_name
+          FROM blobs b
+    INNER JOIN users u
+            ON b.user_id = u.user_id
+         WHERE drive_id = #{driveId}
+           AND delete_date IS NULL
+         <if test="search != null and search != ''">
+           AND b.name LIKE CONCAT('%', #{search}, '%')
+         </if>
+      ORDER BY create_date DESC
+    </select>
+
+    <select id="findUrl" resultType="String">
+        /* DriveMapper.findUrl */
+        SELECT blob_url
+          FROM blobs
+         WHERE blob_id = #{blodId}
+    </select>
+
+    <update id="deleteFile">
+        /* DriveMapper.deleteFile */
+        UPDATE blobs
+           SET delete_date = NOW()
+         WHERE blob_id = #{blobId}
+    </update>
 </mapper>

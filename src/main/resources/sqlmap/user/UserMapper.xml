@@ -98,7 +98,11 @@
 
     <update id="updateUser">
         UPDATE users
-        SET name = #{name}, tech_stack = #{techStack}, description = #{description}, user_type = #{userType}
+        SET name = #{name},
+            tech_stack = #{techStack},
+            description = #{description},
+            user_type = #{userType},
+            profile_image = #{profileImageUrl}
         WHERE user_id = #{userId}
     </update>
 

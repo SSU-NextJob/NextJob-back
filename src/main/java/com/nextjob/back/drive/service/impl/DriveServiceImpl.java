@@ -31,7 +31,7 @@ public class DriveServiceImpl implements DriveService {
     }
 
     @Override
-    public void uploadFile(int driveId, MultipartFile file) {
+    public void uploadFile(int driveId, MultipartFile file, int userId) {
         if (file == null || file.isEmpty()) {
             throw new CustomException(ErrorCode.BAD_REQUEST);
         }
@@ -45,9 +45,30 @@ public class DriveServiceImpl implements DriveService {
             throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
 
+        String originalFilename = file.getOriginalFilename();
+        String fileName = originalFilename;
+        String fileExt = null;
+        long fileSize = file.getSize();
+
+        if (originalFilename != null) {
+            int dotIndex = originalFilename.lastIndexOf(".");
+            if (dotIndex > 0 && dotIndex < originalFilename.length() - 1) {
+                fileExt = originalFilename.substring(dotIndex + 1);
+            } else {
+                fileExt = "";
+            }
+        } else {
+            fileName = "unnamed_file";
+            fileExt = "";
+        }
+
         Blob blob = new Blob();
         blob.setDriveId(driveId);
         blob.setBlobUrl(fileURL);
+        blob.setUserId(userId);
+        blob.setName(fileName);
+        blob.setExt(fileExt);
+        blob.setSize(fileSize);
 
         driveMapper.insertBlob(blob);
     }

@@ -29,10 +29,11 @@ public class DriveController {
      */
     @PostMapping("/{driveId}/blobs/upload")
     public ApiResponse<Map<String, Object>> uploadFile(@PathVariable("driveId") int driveId,
-                                                       @RequestParam("file") MultipartFile file) {
+                                                       @RequestParam("file") MultipartFile file,
+                                                       @RequestParam("userId") int userId) {
         Map<String, Object> result = new HashMap<>();
 
-        driveService.uploadFile(driveId, file);
+        driveService.uploadFile(driveId, file, userId);
 
         return ApiResponse.ok(result);
     }

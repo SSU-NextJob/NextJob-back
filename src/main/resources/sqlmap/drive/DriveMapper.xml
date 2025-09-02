@@ -8,11 +8,19 @@
         INSERT INTO blobs (
             workspace_id,
             blob_url,
-            drive_id
+            drive_id,
+            user_id,
+            ext,
+            name,
+            size
         ) VALUES (
              (SELECT workspace_id FROM drives WHERE drive_id = #{driveId}),
              #{blobUrl},
-             #{driveId}
+             #{driveId},
+             #{userId},
+             #{ext},
+             #{name},
+             #{size}
         )
     </insert>
 

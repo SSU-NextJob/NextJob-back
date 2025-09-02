@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface DriveService {
 
-    void uploadFile(int driveId, MultipartFile file);
+    void uploadFile(int driveId, MultipartFile file, int userId);
 
     List<CamelCaseMap> findFileList(int driveId, String search);
 

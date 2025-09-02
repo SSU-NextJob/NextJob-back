@@ -53,6 +53,21 @@ public class ProjectController {
     }
 
     /**
+     * 프로젝트 삭제
+     *
+     * @return
+     */
+    @DeleteMapping("/{projectId}")
+    @ResponseBody
+    public ApiResponse<CamelCaseMap> deleteProject(@PathVariable("projectId") int projectId) {
+        int count = projectService.deleteProject(projectId);
+        if (count == 0) {
+            throw new CustomException(ErrorCode.PROJECT_NOT_FOUND);
+        }
+        return ApiResponse.ok(null);
+    }
+
+    /**
      * 프로젝트 지원
      *
      * @return

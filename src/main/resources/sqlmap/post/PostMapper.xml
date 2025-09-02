@@ -52,6 +52,7 @@
                 AND p.user_id = #{userId}
             </if>
             AND p.delete_date IS NULL
+            AND pr.delete_date IS NULL
         ORDER BY p.create_date DESC
         LIMIT #{limit} OFFSET #{offset}
     </select>

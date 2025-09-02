@@ -150,4 +150,15 @@ public class ProjectServiceImpl implements ProjectService {
     public List<CamelCaseMap> findProjectMemberList(int projectId) {
         return projectMapper.findProjectMemberList(projectId);
     }
+
+    /**
+     * 프로젝트 제거
+     *
+     * @param projectId
+     * @return
+     */
+    @Override
+    public int deleteProject(int projectId) {
+        return projectMapper.deleteProject(projectId);
+    }
 }

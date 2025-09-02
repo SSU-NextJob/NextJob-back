@@ -1,5 +1,6 @@
 package com.nextjob.back.user.web;
 
+import com.nextjob.back.image.service.ImageService;
 import com.nextjob.back.project.service.ProjectService;
 import com.nextjob.back.project.web.ProjectSearchCriteria;
 import com.nextjob.back.user.service.UserService;
@@ -13,18 +14,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
 
     private final UserService userService;
-
     private final ProjectService projectService;
+    private final ImageService imageService;
 
-    public UserController(UserService userService, ProjectService projectService) {
+    public UserController(UserService userService, ProjectService projectService, ImageService imageService) {
         this.userService = userService;
         this.projectService = projectService;
+        this.imageService = imageService;
     }
 
     /**
@@ -81,13 +84,22 @@ public class UserController {
         String techStack = body.get("techStack").toString();
         String description = body.get("description").toString();
         String userType = body.get("userType").toString();
+        String profileImageUrl = body.get("profileImageUrl").toString();
 
         CamelCaseMap user = userService.findUserDetail(userId);
         if (ObjectUtils.isEmpty(user)) {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 
-        userService.updateUser(userId, name, techStack, description, userType);
+        String pastProfileImageUrl = user.get("profileImage").toString();
+
+        userService.updateUser(userId, name, techStack, description, userType, profileImageUrl);
+        user = userService.findUserDetail(userId);
+
+        // 이미지 변경되었으면 이전 이미지 S3에서 삭제처리
+        if (!Objects.equals(user.getString("profileImage"), pastProfileImageUrl)) {
+            imageService.deleteImage(pastProfileImageUrl);
+        }
 
         return ApiResponse.ok(null);
     }

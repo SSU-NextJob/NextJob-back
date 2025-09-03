@@ -30,4 +30,7 @@ public interface ProjectService {
 
     /* 프로젝트 삭제 */
     int deleteProject(int projectId);
+
+    /* 프로젝트 수정 */
+    int updateProject(Project project);
 }

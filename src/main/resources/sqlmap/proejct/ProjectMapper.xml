@@ -145,7 +145,20 @@
 
     <update id="deleteProject" parameterType="int">
         UPDATE projects
-        SET delete_date = NOW()
+        SET delete_date = NOW(),
+            is_use = 0
+        WHERE project_id = #{projectId}
+    </update>
+
+    <update id="updateProject" parameterType="com.nextjob.back.project.domain.Project">
+        UPDATE projects
+        SET
+            name = #{name},
+            content = #{content},
+            start_at = #{startAt},
+            end_at = #{endAt},
+            status = #{status},
+            type = #{type}
         WHERE project_id = #{projectId}
     </update>
 </mapper>

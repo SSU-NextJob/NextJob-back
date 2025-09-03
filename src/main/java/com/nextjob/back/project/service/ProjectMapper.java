@@ -34,4 +34,6 @@ public interface ProjectMapper {
     int findPostApplyMember(int userId, int postId);
     /* 프로젝트 제거 */
     int deleteProject(int projectId);
+    /* 프로젝트 수정 */
+    int updateProject(Project project);
 }

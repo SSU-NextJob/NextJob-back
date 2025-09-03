@@ -161,4 +161,15 @@ public class ProjectServiceImpl implements ProjectService {
     public int deleteProject(int projectId) {
         return projectMapper.deleteProject(projectId);
     }
+
+    /**
+     * 프로젝트 수정
+     *
+     * @param project
+     * @return
+     */
+    @Override
+    public int updateProject(Project project) {
+        return projectMapper.updateProject(project);
+    }
 }

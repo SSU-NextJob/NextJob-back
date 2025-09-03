@@ -1,5 +1,6 @@
 package com.nextjob.back.project.web;
 
+import com.nextjob.back.post.domain.Post;
 import com.nextjob.back.project.domain.Project;
 import com.nextjob.back.project.service.ProjectService;
 import com.nextjob.base.exception.CustomException;
@@ -50,6 +51,40 @@ public class ProjectController {
             throw new CustomException(ErrorCode.PROJECT_NOT_FOUND);
         }
         return ApiResponse.ok(data);
+    }
+
+    /**
+     * 프로젝트 삭제
+     *
+     * @return
+     */
+    @DeleteMapping("/{projectId}")
+    @ResponseBody
+    public ApiResponse<CamelCaseMap> deleteProject(@PathVariable("projectId") int projectId) {
+        int count = projectService.deleteProject(projectId);
+        if (count == 0) {
+            throw new CustomException(ErrorCode.PROJECT_NOT_FOUND);
+        }
+        return ApiResponse.ok(null);
+    }
+
+    /**
+     * 프로젝트 수정
+     *
+     * @param projectId, project
+     * @return ApiResponse
+     */
+    @PutMapping("/{id}")
+    public ApiResponse<?> updatePost(
+            @PathVariable("id") int projectId,
+            @RequestBody Project project
+    ) {
+        project.setProjectId(projectId);
+        int count = projectService.updateProject(project);
+        if (count == 0) {
+            throw new CustomException(ErrorCode.PROJECT_NOT_FOUND);
+        }
+        return ApiResponse.ok(null);
     }
 
     /**

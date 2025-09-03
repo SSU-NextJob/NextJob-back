@@ -32,4 +32,8 @@ public interface ProjectMapper {
     List<CamelCaseMap> findProjectMemberList(int projectId);
     /* 게시글 지원 중복 확인 */
     int findPostApplyMember(int userId, int postId);
+    /* 프로젝트 제거 */
+    int deleteProject(int projectId);
+    /* 프로젝트 수정 */
+    int updateProject(Project project);
 }

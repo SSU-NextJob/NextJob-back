@@ -1,7 +1,6 @@
 package com.nextjob.back.auth.web;
 
 import com.nextjob.back.auth.service.OAuth2Service;
-import com.nextjob.back.user.domain.User;
 import com.nextjob.back.user.service.UserService;
 import com.nextjob.base.exception.CustomException;
 import com.nextjob.base.exception.ErrorCode;
@@ -51,6 +50,7 @@ public class OAuth2Controller {
 
             return ApiResponse.ok(user);
         }  catch (Exception e) {
+            System.err.println(e.getMessage());
             throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }

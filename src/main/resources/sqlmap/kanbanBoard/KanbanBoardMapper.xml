@@ -151,4 +151,10 @@
           AND kanban_id = #{kanbanId}
           AND delete_date IS NULL
     </select>
+
+    <update id="updateTaskStatus" parameterType="com.nextjob.back.kanbanBoard.domain.KanbanTasks">
+        update kanban_tasks
+        set column_id = #{columnId}, sort = #{sort}
+        where kanban_id = #{kanbanId} and task_id = #{taskId}
+    </update>
 </mapper>

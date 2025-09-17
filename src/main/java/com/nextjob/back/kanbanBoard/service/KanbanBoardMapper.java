@@ -40,4 +40,7 @@ public interface KanbanBoardMapper {
 
     /* 컬럼 목록 조회 */
     List<CamelCaseMap> findColumnList(@Param("kanbanId") int kanbanId);
+
+    /* 작업 상태 변경 */
+    int updateTaskStatus(KanbanTasks task);
 }

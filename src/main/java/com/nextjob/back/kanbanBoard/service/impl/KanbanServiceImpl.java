@@ -151,4 +151,12 @@ public class KanbanServiceImpl implements KanbanService {
         return kanbanBoardMapper.findColumnList(kanbanId);
     }
 
+    @Override
+    public int updateTaskStatus(List<KanbanTasks> tasks) {
+        int count = 0;
+        for (KanbanTasks task : tasks) {
+            count += kanbanBoardMapper.updateTaskStatus(task);
+        }
+        return count;
+    }
 }

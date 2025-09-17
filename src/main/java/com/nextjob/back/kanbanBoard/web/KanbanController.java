@@ -1,5 +1,6 @@
 package com.nextjob.back.kanbanBoard.web;
 
+import com.nextjob.back.kanbanBoard.domain.KanbanTasks;
 import com.nextjob.back.kanbanBoard.service.KanbanService;
 import com.nextjob.base.exception.CustomException;
 import com.nextjob.base.exception.ErrorCode;
@@ -108,5 +109,41 @@ public class KanbanController {
             columnList = new ArrayList<>();
         }
         return ApiResponse.ok(columnList);
+    }
+
+    /**
+     * 작업 상태 변경
+     *
+     * @param body
+     * @return
+     */
+    @PatchMapping("/tasks/status")
+    public ApiResponse<List<CamelCaseMap>> updateTaskStatus(@RequestBody Map<String, Object> body) {
+        List<KanbanTasks> tasksToUpdate = new ArrayList<>();
+        int kanbanId = Integer.parseInt(body.get("kanbanId").toString());
+
+        List<Map<String, Object>> tasksList = (List<Map<String, Object>>) body.get("tasks");
+
+        for (Map<String, Object> columnData : tasksList) {
+            int columnId = Integer.parseInt(columnData.get("columnId").toString());
+            List<Map<String, Object>> taskItems = (List<Map<String, Object>>) columnData.get("items");
+
+            // KanbanTasks 객체 생성하여 업데이트 리스트에 추가
+            for (Map<String, Object> taskMap : taskItems) {
+                KanbanTasks task = new KanbanTasks();
+                task.setKanbanId(kanbanId);
+                task.setColumnId(columnId);
+                task.setTaskId(Integer.parseInt(taskMap.get("taskId").toString()));
+                task.setSort(Integer.parseInt(taskMap.get("sort").toString()));
+
+                tasksToUpdate.add(task);
+            }
+        }
+
+        if (!tasksToUpdate.isEmpty()) {
+            int count = kanbanService.updateTaskStatus(tasksToUpdate);
+        }
+
+        return ApiResponse.ok(null);
     }
 }

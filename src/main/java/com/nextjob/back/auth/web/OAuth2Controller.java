@@ -7,6 +7,7 @@ import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class OAuth2Controller {
      * @return 로그인한 사용자 정보
      */
     @GetMapping("/google/callback")
-    public ApiResponse<CamelCaseMap> googleLogin(@RequestParam("code") String code) {
+    public String googleLogin(@RequestParam("code") String code) {
         try {
             // 인가코드로 유저 정보 반환
             GoogleLoginResult userResult = oauth2Service.getGoogleUserInfo(code);
@@ -48,7 +49,20 @@ public class OAuth2Controller {
             // Google 액세스 토큰 저장 및 업데이트
             userService.updateUserAccessToken(user.getInt("userId"), accessToken);
 
-            return ApiResponse.ok(user);
+            // 프론트로 리다이렉트
+            String redirectUrl = UriComponentsBuilder.fromUriString("https://nextjob-front.vercel.app/oauth2/google/callback")
+                    .queryParam("userId", user.get("userId"))
+                    .queryParam("name", user.get("name"))
+                    .queryParam("email", user.get("email"))
+                    .queryParam("description", user.get("description"))
+                    .queryParam("techStack", user.get("tech_stack"))
+                    .queryParam("profileImage", user.get("profile_image"))
+                    .queryParam("isVisible", user.get("is_visible"))
+                    .queryParam("userType", user.get("user_type"))
+                    .build()
+                    .toUriString();
+
+            return "redirect:" + redirectUrl;
         }  catch (Exception e) {
             System.err.println(e.getMessage());
             throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);

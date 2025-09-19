@@ -67,6 +67,7 @@ public class OAuth2Controller {
                     .queryParam("isVisible", user.get("is_visible"))
                     .queryParam("userType", user.get("user_type"))
                     .build()
+                    .encode()
                     .toUriString();
 
             return "redirect:" + redirectUrl;

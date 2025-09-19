@@ -6,12 +6,13 @@ import com.nextjob.base.exception.CustomException;
 import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping(value = "/oauth2")
 public class OAuth2Controller {
 
@@ -30,7 +31,7 @@ public class OAuth2Controller {
      * @return 로그인한 사용자 정보
      */
     @GetMapping("/google/callback")
-    public String googleLogin(@RequestParam("code") String code) {
+    public String googleLogin(@RequestParam("code") String code, @RequestParam("state") String state) {
         try {
             // 인가코드로 유저 정보 반환
             GoogleLoginResult userResult = oauth2Service.getGoogleUserInfo(code);
@@ -49,8 +50,14 @@ public class OAuth2Controller {
             // Google 액세스 토큰 저장 및 업데이트
             userService.updateUserAccessToken(user.getInt("userId"), accessToken);
 
+            // 프론트 환경 분리
+            String host = "https://nextjob-front.vercel.app";
+            if (state.equals("local")) {
+                host = "http://localhost:5173";
+            }
+
             // 프론트로 리다이렉트
-            String redirectUrl = UriComponentsBuilder.fromUriString("https://nextjob-front.vercel.app/oauth2/google/callback")
+            String redirectUrl = UriComponentsBuilder.fromUriString(host+"/oauth2/google/callback")
                     .queryParam("userId", user.get("userId"))
                     .queryParam("name", user.get("name"))
                     .queryParam("email", user.get("email"))
@@ -77,6 +84,7 @@ public class OAuth2Controller {
      * @return 성공 여부
      */
     @PostMapping("/google/logout")
+    @ResponseBody
     public ApiResponse<String> googleLogout(@RequestBody Map<String, Object> body) {
         int userId = Integer.parseInt(body.get("userId").toString());
         CamelCaseMap user = userService.findUserDetail(userId);

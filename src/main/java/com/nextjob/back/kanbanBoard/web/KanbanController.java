@@ -27,13 +27,11 @@ public class KanbanController {
     /**
      * 작업 목록 조회
      *
-     * @param body
+     * @param kanbanId
      * @return
      */
     @GetMapping("/tasks")
-    public ApiResponse<List<CamelCaseMap>> findTaskList(@RequestBody Map<String, Object> body) {
-        int kanbanId = Integer.parseInt(body.get("kanbanId").toString());
-
+    public ApiResponse<List<CamelCaseMap>> findTaskList(@RequestParam int kanbanId) {
         List<CamelCaseMap> taskList = kanbanService.findTaskList(kanbanId);
         if(ObjectUtils.isEmpty(taskList)) {
             taskList = new ArrayList<>();

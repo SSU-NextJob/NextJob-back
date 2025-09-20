@@ -15,8 +15,8 @@
     <select id="findWorkspaceDetail" resultMap="WorkspaceDetailResultMap">
         SELECT ws.workspace_id, ws.project_id, kb.kanban_id, d.drive_id
         FROM workspaces ws
-        JOIN kanban_boards kb ON ws.workspace_id = kb.workspace_id
-        JOIN drives d ON ws.workspace_id = d.workspace_id
+        LEFT OUTER JOIN kanban_boards kb ON ws.workspace_id = kb.workspace_id
+        LEFT OUTER JOIN drives d ON ws.workspace_id = d.workspace_id
         WHERE ws.workspace_id = #{workspaceId}
     </select>
 

@@ -38,11 +38,6 @@
 
     <insert id="insertTask">
         /* KanbanBoardMapper.insertTask */
-        <selectKey keyProperty="taskId" resultType="int" order="BEFORE">
-            SELECT IFNULL(MAX(task_id)+1, 1)
-              FROM kanban_tasks
-             WHERE kanban_id = #{kanbanId}
-        </selectKey>
         INSERT INTO kanban_tasks (
                     task_id
                   , kanban_id

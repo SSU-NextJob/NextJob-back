@@ -39,7 +39,6 @@ public class KanbanServiceImpl implements KanbanService {
         Map<String, Object> result = new HashMap<>();
 
         KanbanTasks kanbanTasks = new KanbanTasks();
-        kanbanTasks.setKanbanId(kanbanSearchCriteria.getKanbanId());
         kanbanTasks.setColumnId(kanbanSearchCriteria.getColumnId());
         kanbanTasks.setSubject(kanbanSearchCriteria.getSubject());
         kanbanTasks.setContent(kanbanSearchCriteria.getContent());

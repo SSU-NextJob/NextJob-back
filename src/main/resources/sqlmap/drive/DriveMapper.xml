@@ -32,6 +32,7 @@
              , b.size
              , b.create_date
              , u.name AS user_name
+             , b.blob_id
           FROM blobs b
     INNER JOIN users u
             ON b.user_id = u.user_id

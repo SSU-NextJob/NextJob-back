@@ -1,5 +1,6 @@
 package com.nextjob.back.common.service;
 
+import io.awspring.cloud.s3.ObjectMetadata;
 import io.awspring.cloud.s3.S3Resource;
 import io.awspring.cloud.s3.S3Template;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 @Service
@@ -33,7 +36,18 @@ public class ImageUploadService {
         String originalFilename = multipartFile.getOriginalFilename();
         String uniqueFilename = dirName + "/" + UUID.randomUUID().toString() + "-" + originalFilename;
 
-        S3Resource s3Resource = s3Template.upload(this.bucketName, uniqueFilename, multipartFile.getInputStream());
+        // 한글 파일명 인코딩
+        String encodedFilename = URLEncoder.encode(originalFilename, StandardCharsets.UTF_8.toString()).replaceAll("\\+", "%20");
+        // 파일 다운로드
+        String contentDisposition = "attachment; filename*=UTF-8''" + encodedFilename;
+
+        ObjectMetadata metadata = ObjectMetadata.builder()
+                .contentType(multipartFile.getContentType())
+                .contentLength(multipartFile.getSize())
+                .contentDisposition(contentDisposition)
+                .build();
+
+        S3Resource s3Resource = s3Template.upload(this.bucketName, uniqueFilename, multipartFile.getInputStream(), metadata);
 
         return s3Resource.getURL().toString();
     }

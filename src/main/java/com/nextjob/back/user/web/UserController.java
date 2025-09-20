@@ -81,15 +81,10 @@ public class UserController {
     public ApiResponse<CamelCaseMap> updateUser(@RequestBody Map<String, Object> body) {
         int userId = Integer.parseInt(body.get("userId").toString());
         String name = body.get("name").toString();
-        System.out.println(name);
         String techStack = body.get("techStack").toString();
-        System.out.println(techStack);
         String description = body.get("description").toString();
-        System.out.println(description);
         String userType = body.get("userType").toString();
-        System.out.println(userType);
         String profileImageUrl = body.get("profileImageUrl").toString();
-        System.out.println(profileImageUrl);
 
         CamelCaseMap user = userService.findUserDetail(userId);
         if (ObjectUtils.isEmpty(user)) {

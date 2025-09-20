@@ -37,7 +37,7 @@ public class KanbanSearchCriteria extends Domain implements Search {
     /* 생성자 */
     private int userId;
 
-    private int[] user;
+    private int[] users;
 
     public int getKanbanId() {
         return kanbanId;
@@ -111,12 +111,12 @@ public class KanbanSearchCriteria extends Domain implements Search {
         this.importance = importance;
     }
 
-    public int[] getUser() {
-        return user;
+    public int[] getUsers() {
+        return users;
     }
 
-    public void setUser(int[] user) {
-        this.user = user;
+    public void setUser(int[] users) {
+        this.users = users;
     }
 
     public int getUserId() {

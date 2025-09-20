@@ -83,8 +83,7 @@ public class KanbanController {
      * @return
      */
     @GetMapping("/tasks/{taskId}")
-    public ApiResponse<Map<String, Object>> findTaskDetail(@PathVariable("taskId") int taskId, @RequestBody Map<String, Object> body) {
-        int kanbanId = Integer.parseInt(body.get("kanbanId").toString());
+    public ApiResponse<Map<String, Object>> findTaskDetail(@PathVariable("taskId") int taskId, @RequestParam int kanbanId) {
         Map<String, Object> result = kanbanService.findTaskDetail(kanbanId, taskId);
         if (result == null) {
             throw new CustomException(ErrorCode.TASK_NOT_FOUND);
@@ -95,13 +94,11 @@ public class KanbanController {
     /**
      * 컬럼 목록 조회
      *
-     * @param body
+     * @param kanbanId
      * @return
      */
     @GetMapping("/columns")
-    public ApiResponse<List<CamelCaseMap>> findColumnList(@RequestBody Map<String, Object> body) {
-        int kanbanId = Integer.parseInt(body.get("kanbanId").toString());
-
+    public ApiResponse<List<CamelCaseMap>> findColumnList(@RequestParam int kanbanId) {
         List<CamelCaseMap> columnList = kanbanService.findColumnList(kanbanId);
         if(ObjectUtils.isEmpty(columnList)) {
             columnList = new ArrayList<>();

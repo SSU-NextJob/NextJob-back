@@ -39,7 +39,6 @@
     <insert id="insertTask">
         /* KanbanBoardMapper.insertTask */
         INSERT INTO kanban_tasks (
-                    task_id
                   , kanban_id
                   , column_id
                   , subject
@@ -52,7 +51,6 @@
                   , modify_date
                   , user_id
         ) VALUES (
-                    #{taskId}
                   , #{kanbanId}
                   , #{columnId}
                   , #{subject}

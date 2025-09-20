@@ -38,32 +38,37 @@
 
     <insert id="insertTask">
         /* KanbanBoardMapper.insertTask */
+        <selectKey keyProperty="taskId" resultType="int" order="BEFORE">
+            SELECT IFNULL(MAX(task_id), 0) + 1
+            FROM kanban_tasks
+            WHERE kanban_id = #{kanbanId}
+        </selectKey>
         INSERT INTO kanban_tasks (
-                  task_id
-                  , kanban_id
-                  , column_id
-                  , subject
-                  , content
-                  , start_date
-                  , end_date
-                  , sort
-                  , importance
-                  , create_date
-                  , modify_date
-                  , user_id
+            task_id
+            , kanban_id
+            , column_id
+            , subject
+            , content
+            , start_date
+            , end_date
+            , sort
+            , importance
+            , create_date
+            , modify_date
+            , user_id
         ) VALUES (
-                    (SELECT next_id FROM (SELECT IFNULL(MAX(task_id), 0) + 1 AS next_id FROM kanban_tasks WHERE kanban_id = #{kanbanId}) AS temp)
-                 , #{kanbanId}
-                  , #{columnId}
-                  , #{subject}
-                  , #{content}
-                  , #{startDate}
-                  , #{endDate}
-                  , #{sort}
-                  , #{importance}
-                  , NOW()
-                  , NOW()
-                  , #{userId}
+            #{taskId}
+            , #{kanbanId}
+            , #{columnId}
+            , #{subject}
+            , #{content}
+            , #{startDate}
+            , #{endDate}
+            , #{sort}
+            , #{importance}
+            , NOW()
+            , NOW()
+            , #{userId}
         )
     </insert>
 

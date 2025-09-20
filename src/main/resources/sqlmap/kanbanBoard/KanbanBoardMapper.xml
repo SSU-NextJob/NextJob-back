@@ -39,6 +39,7 @@
     <insert id="insertTask">
         /* KanbanBoardMapper.insertTask */
         INSERT INTO kanban_tasks (
+                  task_id
                   , kanban_id
                   , column_id
                   , subject
@@ -51,7 +52,8 @@
                   , modify_date
                   , user_id
         ) VALUES (
-                  , #{kanbanId}
+                    (SELECT next_id FROM (SELECT IFNULL(MAX(task_id), 0) + 1 AS next_id FROM kanban_tasks WHERE kanban_id = #{kanbanId}) AS temp)
+                 , #{kanbanId}
                   , #{columnId}
                   , #{subject}
                   , #{content}

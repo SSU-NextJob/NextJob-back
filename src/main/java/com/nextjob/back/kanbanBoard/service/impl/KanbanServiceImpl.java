@@ -51,9 +51,9 @@ public class KanbanServiceImpl implements KanbanService {
 
         int taskInsertedCount = kanbanBoardMapper.insertTask(kanbanTasks);
 
-        for (int i = 0; i < kanbanSearchCriteria.getUser().length; i++) {
+        for (int i = 0; i < kanbanSearchCriteria.getUsers().length; i++) {
             TaskUsers user = new TaskUsers();
-            user.setUserId(kanbanSearchCriteria.getUser()[i]);
+            user.setUserId(kanbanSearchCriteria.getUsers()[i]);
             user.setTaskId(kanbanTasks.getTaskId());
             user.setKanbanId(kanbanSearchCriteria.getKanbanId());
             int userInsertedCount = kanbanBoardMapper.insertTaskUsers(user);
@@ -91,9 +91,9 @@ public class KanbanServiceImpl implements KanbanService {
 
         int userDeletedCount = kanbanBoardMapper.deleteTaskUsers(kanbanTasks.getTaskId(), kanbanTasks.getKanbanId());
 
-        for (int i = 0; i < kanbanSearchCriteria.getUser().length; i++) {
+        for (int i = 0; i < kanbanSearchCriteria.getUsers().length; i++) {
             TaskUsers user = new TaskUsers();
-            user.setUserId(kanbanSearchCriteria.getUser()[i]);
+            user.setUserId(kanbanSearchCriteria.getUsers()[i]);
             user.setTaskId(kanbanTasks.getTaskId());
             user.setKanbanId(kanbanTasks.getKanbanId());
             int userInsertedCount = kanbanBoardMapper.insertTaskUsers(user);

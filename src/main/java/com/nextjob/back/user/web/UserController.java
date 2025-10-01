@@ -9,6 +9,7 @@ import com.nextjob.base.exception.ErrorCode;
 import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -91,13 +92,13 @@ public class UserController {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 
-        String pastProfileImageUrl = user.get("profileImage").toString();
+        String pastProfileImageUrl = user.getString("profileImage");
 
         userService.updateUser(userId, name, techStack, description, userType, profileImageUrl);
         user = userService.findUserDetail(userId);
 
         // 이미지 변경되었으면 이전 이미지 S3에서 삭제처리
-        if (!Objects.equals(user.getString("profileImage"), pastProfileImageUrl)) {
+        if (StringUtils.hasText(pastProfileImageUrl) && !Objects.equals(user.getString("profileImage"), pastProfileImageUrl)) {
             imageService.deleteImage(pastProfileImageUrl);
         }
 

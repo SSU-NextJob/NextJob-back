@@ -75,27 +75,20 @@ public class UserController {
     /**
      * 사용자 정보 수정
      *
-     * @param body(name, techStack, description, profileImage) 사용자 정보
+     * @param userSearchCriteria
      * @return userId에 해당하는 사용자 정보 수정 성공 여부
      */
     @PatchMapping("/me")
-    public ApiResponse<CamelCaseMap> updateUser(@RequestBody Map<String, Object> body) {
-        int userId = Integer.parseInt(body.get("userId").toString());
-        String name = body.get("name").toString();
-        String techStack = body.get("techStack").toString();
-        String description = body.get("description").toString();
-        String userType = body.get("userType").toString();
-        String profileImageUrl = body.get("profileImageUrl").toString();
-
-        CamelCaseMap user = userService.findUserDetail(userId);
+    public ApiResponse<CamelCaseMap> updateUser(@RequestBody UserSearchCriteria userSearchCriteria) {
+        CamelCaseMap user = userService.findUserDetail(userSearchCriteria.getUserId());
         if (ObjectUtils.isEmpty(user)) {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 
         String pastProfileImageUrl = user.getString("profileImage");
 
-        userService.updateUser(userId, name, techStack, description, userType, profileImageUrl);
-        user = userService.findUserDetail(userId);
+        userService.updateUser(userSearchCriteria);
+        user = userService.findUserDetail(userSearchCriteria.getUserId());
 
         // 이미지 변경되었으면 이전 이미지 S3에서 삭제처리
         if (StringUtils.hasText(pastProfileImageUrl) && !Objects.equals(user.getString("profileImage"), pastProfileImageUrl)) {

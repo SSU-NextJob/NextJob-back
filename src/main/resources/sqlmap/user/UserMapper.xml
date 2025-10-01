@@ -102,7 +102,7 @@
             tech_stack = #{techStack},
             description = #{description},
             user_type = #{userType},
-            profile_image = #{profileImageUrl}
+            profile_image = #{profileImage}
         WHERE user_id = #{userId}
     </update>
 

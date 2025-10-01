@@ -24,14 +24,7 @@ public interface UserMapper {
     int insertNotification(Notification notification);
 
     /* 사용자 정보 수정 */
-    void updateUser(
-            @Param("userId") int userId,
-            @Param("name") String name,
-            @Param("techStack") String techStack,
-            @Param("description") String description,
-            @Param("userType") String userType,
-            @Param("profileImageUrl") String profileImageUrl
-    );
+    void updateUser(UserSearchCriteria userSearchCriteria);
 
     /* 사용자 노출 여부 수정 */
     void updateUserVisibility(@Param("userId") int userId, @Param("isVisible") Boolean isVisible);

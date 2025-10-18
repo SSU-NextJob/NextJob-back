@@ -49,6 +49,7 @@
           FROM users
          WHERE 1=1
            AND is_visible = 1
+           AND user_id != #{myUserId}
         <if test="userType != null and userType != ''" >
            AND user_type = #{userType}
         </if>

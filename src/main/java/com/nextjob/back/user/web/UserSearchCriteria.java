@@ -34,6 +34,8 @@ public class UserSearchCriteria extends Domain implements Search {
 
     private int limit;
 
+    private int myUserId;
+
     public int getUserId() {
         return userId;
     }
@@ -112,5 +114,13 @@ public class UserSearchCriteria extends Domain implements Search {
 
     public void setLimit(int limit) {
         this.limit = limit;
+    }
+
+    public int getMyUserId() {
+        return myUserId;
+    }
+
+    public void setMyUserId(int myUserId) {
+        this.myUserId = myUserId;
     }
 }

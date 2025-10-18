@@ -43,12 +43,14 @@ public class UserController {
             @RequestParam(required = false) String userType,
             @RequestParam(required = false) String search,
             @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "0") int myUserId,
             @RequestParam(defaultValue = "10") int pageSize) {
         UserSearchCriteria userSearchCriteria = new UserSearchCriteria();
         userSearchCriteria.setUserType(userType);
         userSearchCriteria.setSearch(search);
         userSearchCriteria.setOffset((page - 1) * pageSize);
         userSearchCriteria.setLimit(pageSize);
+        userSearchCriteria.setMyUserId(myUserId);
 
         List<CamelCaseMap> userList = userService.findUserList(userSearchCriteria);
         if(ObjectUtils.isEmpty(userList)) {

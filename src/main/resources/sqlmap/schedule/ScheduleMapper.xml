@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nextjob.back.schedule.service.ScheduleMapper">
+
+    <select id="findScheduleList" resultType="CamelCaseMap">
+        /* ScheduleMapper.findScheduleList */
+        SELECT schedule_id
+             , title
+             , start_date
+             , end_date
+          FROM schedules
+         WHERE delete_date IS NULL
+           AND start_date BETWEEN #{startDate} AND #{endDate}
+    </select>
+
+
+    <insert id="insertSchedule" useGeneratedKeys="true" keyProperty="scheduleId" keyColumn="schedule_id">
+        /* ScheduleMapper.insertSchedule */
+        INSERT INTO schedules (
+                    workspace_id
+                  , title
+                  , content
+                  , start_date
+                  , end_date
+                  , create_date
+                  , modify_date
+                  , user_id
+        ) VALUES (
+                    #{workspaceId}
+                  , #{title}
+                  , #{content}
+                  , #{startDate}
+                  , #{endDate}
+                  , NOW()
+                  , NOW()
+                  , #{userId}
+                 )
+    </insert>
+
+    <insert id="insertScheduleUser">
+        /* ScheduleMapper.insertScheduleUser */
+        INSERT INTO schedules_users (
+                    user_id
+                  , schedule_id
+        ) VALUES (
+                    #{userId}
+                  , #{scheduleId}
+                 )
+    </insert>
+
+    <update id="updateSchedule">
+        /* ScheduleMapper.updateSchedule */
+        UPDATE schedules
+           SET title = #{title}
+             , content = #{content}
+             , start_date = #{startDate}
+             , end_date = #{endDate}
+         WHERE schedule_id = #{scheduleId}
+    </update>
+
+    <delete id="deleteScheduleUser">
+        /* ScheduleMapper.deleteScheduleUser */
+        DELETE
+          FROM schedules_users
+         WHERE schedule_id = #{scheduleId}
+    </delete>
+
+    <select id="findScheduleDetail" resultType="CamelCaseMap">
+        /* ScheduleMapper.findScheduleDetail */
+        SELECT schedule_id
+             , title
+             , content
+             , start_date
+             , end_date
+          FROM schedules
+         WHERE schedule_id = #{scheduleId}
+    </select>
+
+    <select id="findScheduleDetailUserList" resultType="CamelCaseMap">
+        /* ScheduleMapper.findScheduleDetailUserList */
+        SELECT s.user_id,
+               u.name
+          FROM schedules_users AS s
+          LEFT JOIN users AS u
+                 ON s.user_id = u.user_id
+         WHERE s.schedule_id = #{scheduleId}
+
+    </select>
+
+    <update id="deleteSchedule" parameterType="int">
+        /* ScheduleMapper.deleteSchedule */
+        UPDATE schedules
+           SET delete_date = NOW()
+         WHERE schedule_id = #{scheduleId}
+    </update>
+</mapper>

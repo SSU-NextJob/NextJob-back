@@ -3,8 +3,12 @@ package com.nextjob.back.workspace.web;
 import com.nextjob.back.workspace.service.WorkspaceService;
 import com.nextjob.base.exception.CustomException;
 import com.nextjob.base.exception.ErrorCode;
+import com.nextjob.base.util.CamelCaseMap;
 import com.nextjob.base.web.response.ApiResponse;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/workspaces")
@@ -29,5 +33,20 @@ public class WorkspaceController {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
         return ApiResponse.ok(workspace);
+    }
+
+    /**
+     * 워크스페이스 팀원
+     *
+     * @param workspaceId 워크스페이스 ID
+     * @return 팀원 목록 전달
+     */
+    @GetMapping("/{workspaceId}/users")
+    public ApiResponse<List<CamelCaseMap>> findWorkspaceUsers(@PathVariable("workspaceId") int workspaceId) {
+        List<CamelCaseMap> users = workspaceService.findWorkspaceUsers(workspaceId);
+        if (users == null) {
+            users = Collections.emptyList();
+        }
+        return ApiResponse.ok(users);
     }
 }

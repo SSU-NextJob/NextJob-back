@@ -23,4 +23,15 @@
     <insert id="insertWorkSpace" parameterType="com.nextjob.back.workspace.domain.Workspace" useGeneratedKeys="true" keyProperty="workspaceId">
         INSERT INTO workspaces (project_id) VALUES (#{projectId});
     </insert>
+
+    <select id="findWorkspaceUsers" resultType="CamelCaseMap">
+        SELECT
+            pm.member_id,
+            pm.user_id,
+            u.name,
+            u.profile_image
+        FROM project_members pm
+                 LEFT OUTER JOIN users u on u.user_id = pm.user_id
+        WHERE project_id = (SELECT project_id FROM workspaces WHERE workspace_id =  #{workspaceId})
+    </select>
 </mapper>
